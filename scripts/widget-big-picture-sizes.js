@@ -6,7 +6,7 @@
  * Expects #size-chart-widget with .readout, .size-chart, .size-axis-note, and scale buttons
  * [data-scale="linear" | "log"].
  *
- * - Byte counts come from the standards (FIPS 203/204/205, RFC 8032/7748, the Classic
+ * - Byte counts come from the standards (FIPS 203/204/205, RFC 8032/7748/7919, the Classic
  *   McEliece reference sizes); RSA-2048 counts the bare 2048-bit modulus.
  * - Bars are HTML, not SVG, so labels reflow on a phone; each bar's width is a fraction of
  *   the track minus room for its label.
@@ -17,6 +17,7 @@
   const Trapdoor = window.Trapdoor;
   const SCHEMES = [
     { name: "RSA-2048", family: "factoring", key: 256, second: 256, secondKind: "sig", note: "Signature and ciphertext are both 256 bytes; the key counts only the 2048-bit number." },
+    { name: "DH-2048", family: "clock powers", key: 256, second: 256, secondKind: "sent", note: "On a 2048-bit clock (RFC 7919), each side announces a 256-byte hour. That hour is both the public key and the value sent." },
     { name: "Ed25519 / X25519", family: "elliptic curves", key: 32, second: 64, secondKind: "sig", note: "The yardstick: an Ed25519 signature is 64 bytes, an X25519 reply 32." },
     { name: "ML-KEM-768", family: "lattices", key: 1184, second: 1088, secondKind: "ct", note: "Ciphertext 1,088 bytes. Standardized in FIPS 203." },
     { name: "ML-DSA-65", family: "lattices", key: 1952, second: 3309, secondKind: "sig", note: "Signature 3,309 bytes. Standardized in FIPS 204." },
@@ -28,7 +29,7 @@
   const LOG_MAX_BYTES = 300000;
   const LOG_TICKS = [10, 100, 1000, 10000, 100000];
   const LINEAR_TICKS = [0, 100000, 200000];
-  const KIND_LABEL = { key: "key", sig: "sig", ct: "ct" };
+  const KIND_LABEL = { key: "key", sig: "sig", ct: "ct", sent: "sent" };
 
   const widget = document.getElementById("size-chart-widget");
   const readout = widget.querySelector(".readout");
@@ -37,7 +38,7 @@
   const scaleButtons = Array.from(widget.querySelectorAll("[data-scale]"));
 
   let scale = "linear";
-  let selectedIndex = 2;
+  let selectedIndex = 3;
 
   const maxBytes = Math.max(...SCHEMES.map((scheme) => Math.max(scheme.key, scheme.second)));
 

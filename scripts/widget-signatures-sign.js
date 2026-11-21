@@ -71,7 +71,7 @@
     if (matches && !tampered) {
       detail.textContent = `Signature to the power 17 lands on ${opened}, the same as the fingerprint. Only Bob's private key could do that.`;
     } else if (matches) {
-      detail.textContent = `The message changed, yet the numbers match: a 1 in 3233 fluke of this tiny toy. Real keys make that hopeless.`;
+      detail.textContent = `The message changed, yet the numbers match: a 1 in 3233 fluke of this tiny toy. Real fingerprints make that hopeless.`;
     } else {
       detail.textContent = `Signature to the power 17 lands on ${opened}, but the fingerprint is ${fingerprint}. Someone changed the message.`;
     }

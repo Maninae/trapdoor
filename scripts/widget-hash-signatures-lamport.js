@@ -144,7 +144,8 @@
     } else {
       status = {
         lead: `Second message, same key: ${leakedCount} columns leaked.`,
-        detail: `Both secrets are public in the red columns, so anyone can now sign ${2 ** leakedCount} messages.`,
+        // Every message signed so far is inside the forgeable set, so count only the new ones.
+        detail: `Both secrets are public in the red columns, so anyone can now sign ${2 ** leakedCount - signedMessages.length} new messages.`,
       };
     }
     render();

@@ -100,14 +100,14 @@
     <section class="prose" aria-labelledby="fingerprint-heading">
       <h2 id="fingerprint-heading">Sign the fingerprint</h2>
       <p>Bob does not sign the message itself, which could be any length. He signs its <a href="scrambling.html">hash</a>, the fingerprint from chapter 2. Change one letter and the fingerprint changes, so the old signature no longer fits.</p>
-      <p>Our toy squeezes the fingerprint onto a 3233-hour clock, so a forger could get lucky 1 time in 3233. Real signatures use keys of 2048 bits or more, where luck is hopeless.</p>
+      <p>Our toy squeezes the fingerprint onto a 3233-hour clock, so a forger could get lucky 1 time in 3233. Real signatures keep the full 256-bit fingerprint, so a lucky match has a chance of 1 in 2<sup>256</sup>, and they use keys of 2048 bits or more.</p>
     </section>
 
     <section class="prose" aria-labelledby="chain-heading">
       <h2 id="chain-heading">The padlock is a chain of signatures</h2>
       <p>How does your browser learn the bank's public key? The bank sends a certificate: its name and public key, signed by a <button type="button" class="term" aria-controls="note-authority" aria-expanded="false">certificate authority</button>. That authority's key is signed by another, up to a root authority whose key came built into your browser or phone.</p>
       <aside class="term-note" id="note-authority" hidden>
-        <p>A certificate authority is an organization that checks who owns a website before signing its certificate. Browsers and operating systems ship with a short list of root authorities they trust. Let's Encrypt is one that signs certificates for free.</p>
+        <p>A certificate authority is an organization that checks who owns a website before signing its certificate. Browsers and operating systems ship with a built-in list of roughly 100 to 150 root certificates they trust. Let's Encrypt is one that signs certificates for free.</p>
         <p><a href="https://en.wikipedia.org/wiki/Certificate_authority" target="_blank" rel="noopener">Certificate authority on Wikipedia</a></p>
         <button type="button" class="term-note-close">Close</button>
       </aside>

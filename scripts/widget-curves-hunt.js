@@ -72,9 +72,14 @@
 
     if (solvedBy) {
       const who = solvedBy === "reader" ? "You found it" : "The computer found it";
+      // Count only the winner's own tries, so the reader's guesses never inflate the computer's search.
+      const solverTryCount = tries.filter(({ triedBy }) => triedBy === solvedBy).length;
+      const backwardNote = solvedBy === "reader"
+        ? `Working backward took ${solverTryCount} tries.`
+        : `Working backward took the computer ${solverTryCount} tries.`;
       readout.innerHTML = `
         <span class="readout-lead">${who}: ${lastTry.hopCount} hops from P lands on ${Curves.formatGridPoint(target)}.</span>
-        <span class="readout-detail">Working backward took ${tries.length} tries.</span>`;
+        <span class="readout-detail">${backwardNote}</span>`;
     } else {
       const forwardNote = lastTry && lastTry.triedBy === "reader"
         ? `Your ${lastTry.hopCount} hops landed on ${Curves.formatGridPoint(lastTry.landing)}, `

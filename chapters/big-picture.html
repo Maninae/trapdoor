@@ -56,12 +56,12 @@
         <div class="size-chart" role="group" aria-label="Key and signature or ciphertext sizes in bytes. Tap a row for its numbers."></div>
         <p class="size-axis-note"></p>
       </div>
-      <figcaption class="size-caption">Blue: public key. Gray: signature (sig) or ciphertext (ct). Tap a row.</figcaption>
+      <figcaption class="size-caption">Blue: public key. Gray: signature (sig), ciphertext (ct), or value sent (sent). Tap a row.</figcaption>
     </figure>
 
     <section class="prose" aria-labelledby="table-heading">
       <h2 id="table-heading">Side by side</h2>
-      <p>Every family rests on a different hard problem. Two of them fall to a large quantum computer running <button type="button" class="term" aria-controls="note-shor" aria-expanded="false">Shor's algorithm</button>.</p>
+      <p>Every family rests on a different hard problem. Three of them fall to a large quantum computer running <button type="button" class="term" aria-controls="note-shor" aria-expanded="false">Shor's algorithm</button>.</p>
       <aside class="term-note" id="note-shor" hidden>
         <p>Peter Shor showed in 1994 that a quantum computer could find the hidden repeating pattern inside factoring and curve problems, and so solve them quickly. No machine big enough to run it on real key sizes exists yet.</p>
         <p><a href="https://en.wikipedia.org/wiki/Shor%27s_algorithm" target="_blank" rel="noopener">Shor's algorithm on Wikipedia</a></p>
@@ -82,15 +82,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr><th scope="row"><a href="two-keys.html">Factoring</a></th><td>Split a product of two primes</td><td class="numeric">1977</td><td class="numeric">256</td><td class="numeric">256</td><td class="verdict-broken">Breaks it</td></tr>
-          <tr><th scope="row"><a href="hash-signatures.html">Codes</a></th><td>Fix planted errors in a hidden code</td><td class="numeric">1978</td><td class="numeric">261,120</td><td class="numeric">96</td><td>No known attack</td></tr>
-          <tr><th scope="row"><a href="hash-signatures.html">Hashes</a></th><td>Reverse a fingerprint</td><td class="numeric">1979</td><td class="numeric">32</td><td class="numeric">7,856</td><td>Small speed-up</td></tr>
-          <tr><th scope="row"><a href="curves.html">Elliptic curves</a></th><td>Undo hops on a curve</td><td class="numeric">1985</td><td class="numeric">32</td><td class="numeric">64</td><td class="verdict-broken">Breaks it</td></tr>
-          <tr><th scope="row"><a href="lattices.html">Lattices</a></th><td>Nearest dot in a skewed grid</td><td class="numeric">1996</td><td class="numeric">1,184</td><td class="numeric">1,088</td><td>No known attack</td></tr>
+          <tr><th scope="row"><a href="shared-secret.html">Clock powers</a></th><td class="problem" data-label="Hard problem">Find the secret power</td><td class="numeric" data-label="Since">1976</td><td class="numeric" data-label="Key (bytes)">256</td><td class="numeric" data-label="Sig or ct (bytes)">256</td><td class="verdict verdict-broken" data-label="Big quantum computer">Breaks it</td></tr>
+          <tr><th scope="row"><a href="two-keys.html">Factoring</a></th><td class="problem" data-label="Hard problem">Split a product of two primes</td><td class="numeric" data-label="Since">1977</td><td class="numeric" data-label="Key (bytes)">256</td><td class="numeric" data-label="Sig or ct (bytes)">256</td><td class="verdict verdict-broken" data-label="Big quantum computer">Breaks it</td></tr>
+          <tr><th scope="row"><a href="hash-signatures.html">Codes</a></th><td class="problem" data-label="Hard problem">Fix planted errors in a hidden code</td><td class="numeric" data-label="Since">1978</td><td class="numeric" data-label="Key (bytes)">261,120</td><td class="numeric" data-label="Sig or ct (bytes)">96</td><td class="verdict" data-label="Big quantum computer">No known attack</td></tr>
+          <tr><th scope="row"><a href="hash-signatures.html">Hashes</a></th><td class="problem" data-label="Hard problem">Reverse a fingerprint</td><td class="numeric" data-label="Since">1979</td><td class="numeric" data-label="Key (bytes)">32</td><td class="numeric" data-label="Sig or ct (bytes)">7,856</td><td class="verdict" data-label="Big quantum computer">Small speed-up</td></tr>
+          <tr><th scope="row"><a href="curves.html">Elliptic curves</a></th><td class="problem" data-label="Hard problem">Undo hops on a curve</td><td class="numeric" data-label="Since">1985</td><td class="numeric" data-label="Key (bytes)">32</td><td class="numeric" data-label="Sig or ct (bytes)">64</td><td class="verdict verdict-broken" data-label="Big quantum computer">Breaks it</td></tr>
+          <tr><th scope="row"><a href="lattices.html">Lattices</a></th><td class="problem" data-label="Hard problem">Nearest dot in a skewed grid</td><td class="numeric" data-label="Since">1996</td><td class="numeric" data-label="Key (bytes)">1,184</td><td class="numeric" data-label="Sig or ct (bytes)">1,088</td><td class="verdict" data-label="Big quantum computer">No known attack</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="table-note">Sizes: RSA-2048, mceliece348864, SLH-DSA-SHA2-128s, Ed25519, ML-KEM-768.</p>
+    <p class="table-note">Sizes: ffdhe2048 (second size: the announced hour), RSA-2048, mceliece348864, SLH-DSA-SHA2-128s, Ed25519, ML-KEM-768.</p>
 
     <section class="card" aria-labelledby="sike-heading">
       <h2 id="sike-heading">A cautionary tale</h2>

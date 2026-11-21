@@ -5,14 +5,14 @@
  * Expects #big-exchange with .big-exchange-rows (a <dl>), .big-exchange-verdict, and
  * [data-action="new-secrets"].
  *
- * - Clock 2^127 - 1 (a Mersenne prime) and start number 3, the same big clock as chapter 3.
+ * - A 39-digit safe prime clock ((p - 1) / 2 is also prime) and start number 3, the same as chapter 3.
  * - Secrets come from crypto.getRandomValues; nothing is sent anywhere.
  */
 (function () {
   "use strict";
 
   const Trapdoor = window.Trapdoor;
-  const BIG_CLOCK_HOURS = (1n << 127n) - 1n;
+  const BIG_CLOCK_HOURS = 170141183460469231731687303715884114527n;
   const START_NUMBER = 3n;
   const SECRET_DIGITS = 30;
 

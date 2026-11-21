@@ -18,8 +18,9 @@
   const CHALLENGE_PRIME = 29;
   const MAX_GUESS_EXPONENT = 999;
   const COMPUTER_TRY_INTERVAL_MS = 140;
-  // 2^127 - 1, a Mersenne prime (proved prime by Lucas in 1876): a 39-digit clock.
-  const BIG_CLOCK_HOURS = (1n << 127n) - 1n;
+  // A 39-digit safe prime p: (p - 1) / 2 is also prime, so p - 1 has no small factors to exploit.
+  // 3 lands on (p - 1) / 2 different hours, so backward search still faces about 10^38 powers.
+  const BIG_CLOCK_HOURS = 170141183460469231731687303715884114527n;
   const BIG_CLOCK_BASE = 3n;
   const MAX_FORWARD_EXPONENT_DIGITS = 40;
 

@@ -124,3 +124,34 @@
 
 .table-note { margin: var(--space-2) 0 0; color: var(--ink-soft); font-size: 0.94rem; }
 
+
+/* Phone: each row becomes a small card so the quantum verdict shows without sideways scrolling. */
+@media (max-width: 599px) {
+  .family-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .family-table, .family-table tbody { display: block; }
+  .family-table tbody tr {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-areas: "family family family verdict verdict verdict" "problem problem problem problem problem problem" "since since key key second second";
+    gap: var(--space-1) var(--space-2);
+    padding: var(--space-3);
+    border-bottom: 1px solid var(--grid-line);
+  }
+  .family-table tbody tr:last-child { border-bottom: 0; }
+  .family-table tbody th, .family-table tbody td { display: block; padding: 0; border: 0; white-space: normal; text-align: left; }
+  .family-table tbody td.numeric { text-align: left; }
+  .family-table tbody th { grid-area: family; align-self: end; font-size: 1rem; }
+  .family-table .problem { grid-area: problem; }
+  .family-table .verdict { grid-area: verdict; text-align: right; }
+  .family-table td.numeric:nth-of-type(2) { grid-area: since; }
+  .family-table td.numeric:nth-of-type(3) { grid-area: key; }
+  .family-table td.numeric:nth-of-type(4) { grid-area: second; }
+  .family-table td.numeric::before, .family-table .verdict::before {
+    content: attr(data-label);
+    display: block;
+    font-family: var(--font-ui);
+    font-size: var(--t-sm);
+    font-weight: 400;
+    color: var(--ink-soft);
+  }
+}
