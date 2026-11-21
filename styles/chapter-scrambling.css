@@ -1,31 +1,10 @@
 /*
  * Chapter "The blender": bit blocks for XOR, the toy mixing grids, and the SHA-256 fingerprint.
- * Colors come only from the tokens in shared.css. Bit colors: message ink, key gray,
+ * Colors come only from tokens.css. Bit colors: message ink, key gray,
  * scrambled blue (the thing that just changed), recovered green.
  */
 
 /* ---------- shared bits for this chapter ---------- */
-
-.widget-stack { grid-template-columns: minmax(0, 1fr); }
-@media (min-width: 760px) {
-  .widget.widget-stack { grid-template-columns: minmax(0, 1fr); align-items: start; }
-}
-
-.text-field { display: flex; flex-direction: column; gap: var(--space-1); }
-.text-field label { font-family: var(--font-ui); font-size: var(--t-sm); color: var(--ink-soft); }
-
-.text-input {
-  min-height: var(--touch);
-  width: 100%;
-  min-width: 0;
-  padding: 0 var(--space-3);
-  font-family: var(--font-ui);
-  font-size: var(--t-base);
-  color: var(--ink);
-  background: var(--surface);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-}
 
 .readout-code {
   font-family: ui-monospace, "SF Mono", Menlo, monospace;
@@ -37,9 +16,6 @@
 }
 
 .readout-code-ok { color: var(--ok); }
-.readout-of { font-size: var(--t-md); color: var(--ink-soft); font-weight: 400; }
-
-.legend-item { display: inline-flex; align-items: center; gap: var(--space-2); }
 
 /* ---------- XOR bit blocks ---------- */
 

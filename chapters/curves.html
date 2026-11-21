@@ -3,14 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hopping on a curve | Trapdoor</title>
+  <title>Hopping on a curve: elliptic curve cryptography | Trapdoor</title>
   <meta name="description" content="A hands-on lesson in elliptic curves: a rule for adding points, hops that scatter across a grid of whole numbers, and why counting the hops backward is hard.">
+  <link rel="canonical" href="https://maninae.github.io/trapdoor/chapters/curves.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Trapdoor">
+  <meta property="og:title" content="Hopping on a curve: elliptic curve cryptography">
+  <meta property="og:description" content="A hands-on lesson in elliptic curves: a rule for adding points, hops that scatter across a grid of whole numbers, and why counting the hops backward is hard.">
+  <meta property="og:url" content="https://maninae.github.io/trapdoor/chapters/curves.html">
+  <meta property="og:image" content="https://maninae.github.io/trapdoor/assets/preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Trapdoor: the site name beside the elliptic curve widget from chapter 7, drawn on squared paper.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hopping on a curve: elliptic curve cryptography">
+  <meta name="twitter:description" content="A hands-on lesson in elliptic curves: a rule for adding points, hops that scatter across a grid of whole numbers, and why counting the hops backward is hard.">
+  <meta name="twitter:image" content="https://maninae.github.io/trapdoor/assets/preview.png">
   <meta name="theme-color" content="#f4f3ee">
+  <meta name="color-scheme" content="light">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/icons/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
-  <link rel="stylesheet" href="../styles/shared.css">
+  <link rel="stylesheet" href="../styles/tokens.css">
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/widgets.css">
+  <link rel="stylesheet" href="../styles/controls.css">
+  <link rel="stylesheet" href="../styles/components.css">
   <link rel="stylesheet" href="../styles/chapter-curves.css">
 </head>
 <body>
@@ -148,13 +170,20 @@
     </section>
   </main>
 
+  <nav class="chapter-nav" aria-label="Chapters">
+    <p class="chapter-nav-all"><a href="../index.html">All chapters</a></p>
+  </nav>
+
   <script src="../scripts/core.js"></script>
   <script src="../scripts/glossary.js"></script>
   <script src="../scripts/curves-helpers.js"></script>
+  <script src="../scripts/curves-labels.js"></script>
   <script src="../scripts/curves-grid-helpers.js"></script>
   <script src="../scripts/widget-curves-add.js"></script>
   <script src="../scripts/widget-curves-hops.js"></script>
   <script src="../scripts/widget-curves-grid.js"></script>
   <script src="../scripts/widget-curves-hunt.js"></script>
+  <script src="../scripts/chapters.js"></script>
+  <script src="../scripts/chapter-nav.js"></script>
 </body>
 </html>

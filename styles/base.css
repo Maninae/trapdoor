@@ -1,0 +1,104 @@
+/*
+ * Base layer: reset, page frame, headings, prose, and the chapter ending.
+ * Load order on every page: tokens, base, widgets, controls, components, then the chapter sheet.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-size: 106.25%;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (min-width: 760px) {
+  html { font-size: 112.5%; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--t-base);
+  line-height: 1.65;
+  font-variant-numeric: lining-nums;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+a { color: var(--accent); text-underline-offset: 0.15em; }
+
+/* ---------- page frame ---------- */
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-4) 0;
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+
+.site-name {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+  padding: var(--space-3) 0;
+}
+
+.chapter {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 var(--space-4) var(--space-12);
+}
+
+h1 {
+  font-size: var(--t-xl);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: var(--space-2) 0 var(--space-4);
+}
+
+h2 {
+  font-size: var(--t-lg);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 var(--space-3);
+}
+
+.prose {
+  max-width: 36rem;
+  margin: var(--space-12) 0 var(--space-6);
+}
+
+.prose p { margin: 0 0 var(--space-4); }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+@media (max-width: 759px) {
+  .site-header { padding-top: var(--space-2); }
+  h1 { margin: 0 0 var(--space-3); }
+}
+
+/* ---------- ending ---------- */
+
+.closing { margin-top: var(--space-12); }
+
+.bridge {
+  font-size: var(--t-md);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}

@@ -1,0 +1,55 @@
+/*
+ * Trapdoor design tokens: a math notebook. Plain paper page, figures drawn on squared paper,
+ * one fountain-pen blue for whatever just moved, red pencil only for a challenge target.
+ *
+ * - Every color on the site is a token here; no other sheet uses a raw hex except the
+ *   chapter 4 paint colors, which live with that chapter.
+ * - Light theme only by design.
+ * - Type: Literata for prose and numbers, Atkinson Hyperlegible for controls. Scale ratio 1.25.
+ * - People keep one hue across chapters 4 to 6: Alice teal, Bob violet, Eve (the listener) soft ink.
+ */
+
+:root {
+  color-scheme: light;
+
+  --bg: #f4f3ee;
+  --surface: #fbfaf7;
+  --ink: #1d2433;
+  --ink-soft: #565d6d;
+  --rule: #d4d1c6;
+  --grid-line: #ecebe4;
+  --accent: #2350b8;
+  --accent-soft: #9fb3e3;
+  --on-accent: #ffffff;
+  --accent-2: #b3261e;
+  --ok: #2f7d4a;
+
+  --person-alice: #0f6e66;
+  --person-alice-soft: #e2f0ee;
+  --person-bob: #74389a;
+  --person-bob-soft: #efe6f4;
+  --person-eve: var(--ink-soft);
+
+  --font-body: "Literata", Georgia, "Times New Roman", serif;
+  --font-ui: "Atkinson Hyperlegible", -apple-system, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  --t-sm: 0.8rem;
+  --t-base: 1rem;
+  --t-md: 1.25rem;
+  --t-lg: 1.563rem;
+  --t-xl: 1.953rem;
+  --t-display: 3.052rem;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+
+  --radius: 10px;
+  --touch: 44px;
+  --grid-step: 22px;
+}

@@ -1,0 +1,116 @@
+/*
+ * Widget layer: the figure frame (a drawing on squared paper), the clock-dial marks, and the
+ * readouts that are each widget's payload.
+ *
+ * - .widget lays drawing and panel side by side from 760px; .widget-stack keeps one column.
+ * - .readout-big in --accent is the focal point of a widget: what just landed.
+ */
+
+.widget {
+  margin: var(--space-4) 0 0;
+  padding: var(--space-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background-color: var(--surface);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-step) var(--grid-step);
+  display: grid;
+  gap: var(--space-4);
+}
+
+.dial {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.widget-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.widget figcaption { grid-column: 1 / -1; }
+
+/* Phone: keep the hero dial small enough that a control shows on the first screen. */
+@media (max-width: 759px) {
+  .widget-hero .dial { max-width: 250px; }
+  .widget-hero { gap: var(--space-3); }
+}
+
+@media (min-width: 760px) {
+  .widget {
+    grid-template-columns: minmax(0, 23rem) minmax(0, 1fr);
+    align-items: center;
+    padding: var(--space-6);
+    gap: var(--space-6);
+  }
+  .dial { max-width: 23rem; }
+  .widget-hero .dial { max-width: 25rem; }
+  .widget-hero { grid-template-columns: minmax(0, 25rem) minmax(0, 1fr); }
+}
+
+/* A widget whose drawing spans the full width, with the controls underneath. */
+.widget-stack { grid-template-columns: minmax(0, 1fr); }
+
+@media (min-width: 760px) {
+  .widget.widget-stack { grid-template-columns: minmax(0, 1fr); align-items: start; }
+}
+
+/* ---------- dial marks (SVG) ---------- */
+
+.dial-ring { fill: none; stroke: var(--rule); stroke-width: 2; }
+.dial-tick { fill: var(--ink-soft); }
+.dial-label { fill: var(--ink-soft); font-family: var(--font-body); }
+.dial-label-landed { fill: var(--accent); font-weight: 600; }
+.dial-label-target { fill: var(--accent-2); font-weight: 600; }
+.dial-label-start { fill: var(--ink); font-weight: 600; }
+.dial-mark-landed { fill: var(--accent); }
+.dial-mark-visited { fill: var(--accent-soft); }
+.dial-mark-start { fill: var(--surface); stroke: var(--accent); stroke-width: 3; }
+.dial-mark-target { fill: var(--surface); stroke: var(--accent-2); stroke-width: 4; }
+.dial-mark-miss { fill: var(--ink-soft); opacity: 0.5; }
+.dial-chord { stroke: var(--accent); stroke-width: 2; opacity: 0.35; }
+.dial-chord-latest { stroke-width: 3.5; opacity: 1; }
+.dial-arc { fill: none; stroke: var(--accent); stroke-width: 3.5; stroke-linecap: round; }
+.dial-arrowhead { fill: var(--accent); }
+.dial-hand line { stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
+.dial-hand circle { fill: var(--ink); }
+
+/* ---------- readouts: the payload of each widget ---------- */
+
+.readout {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.readout-lead { font-size: var(--t-md); line-height: 1.3; }
+
+.readout-big {
+  font-size: var(--t-display);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.readout-target { color: var(--accent-2); }
+
+/* "12 of 26": the denominator sits quieter than the big number. */
+.readout-of { font-size: var(--t-md); color: var(--ink-soft); font-weight: 400; }
+
+.readout-detail {
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.45;
+}
+
+.legend-item { display: inline-flex; align-items: center; gap: var(--space-2); }

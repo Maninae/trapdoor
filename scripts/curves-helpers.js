@@ -3,7 +3,8 @@
  *
  * - Smooth curve: float math, a fixed 400x400 plot window, a dense ordered list of points
  *   on the curve (so dragging snaps to it), and the "add" construction drawing.
- * - The whole-number grid half lives in curves-grid-helpers.js (load it after this file).
+ * - The whole-number grid half lives in curves-grid-helpers.js and label placement in
+ *   curves-labels.js (load both after this file).
  * - The point "zero" (what a vertical line gives) is represented as null everywhere.
  */
 (function () {
@@ -18,8 +19,6 @@
   const SAMPLES_PER_BRANCH = 700;
   const LONG_LINE_PX = 3000;
   const SAME_POINT_TOLERANCE = 1e-9;
-  const LABEL_CHAR_WIDTH = 10;
-  const LABEL_HEIGHT = 20;
 
   function createSvgElement(tagName, attributes = {}) {
     const element = document.createElementNS(SVG_NAMESPACE, tagName);
@@ -169,34 +168,6 @@
     return isOnPage(result.sum) ? [sumX, sumY] : null;
   }
 
-  /**
-   * Place text labels next to their anchors without overlapping each other or the edge.
-   * labels: [{ anchor: [x, y], text, className }]; earlier labels win their first choice.
-   */
-  function placeLabels(group, labels) {
-    const offsets = [[14, -14], [14, 26], [-14, -14], [-14, 26], [16, 6], [-16, 6]];
-    const placedBoxes = [];
-    labels.forEach(({ anchor, text, className }) => {
-      const width = text.length * LABEL_CHAR_WIDTH;
-      let chosen = null;
-      for (const [offsetX, offsetY] of offsets) {
-        const left = offsetX >= 0 ? anchor[0] + offsetX : anchor[0] + offsetX - width;
-        const box = { left, top: anchor[1] + offsetY - LABEL_HEIGHT + 4, width, height: LABEL_HEIGHT };
-        const insidePlot = box.left >= 2 && box.left + width <= PLOT_SIZE - 2 && box.top >= 2
-          && box.top + LABEL_HEIGHT <= PLOT_SIZE - 2;
-        const overlaps = placedBoxes.some((other) => box.left < other.left + other.width
-          && other.left < box.left + box.width && box.top < other.top + other.height
-          && other.top < box.top + box.height);
-        if (insidePlot && !overlaps) { chosen = box; break; }
-      }
-      if (!chosen) return;
-      placedBoxes.push(chosen);
-      const label = createSvgElement("text", { x: chosen.left, y: chosen.top + LABEL_HEIGHT - 4, class: className });
-      label.textContent = text;
-      group.appendChild(label);
-    });
-  }
-
   /** Convert a pointer event's screen position into plot coordinates. */
   function clientToPlot(svg, clientX, clientY) {
     const matrix = svg.getScreenCTM();
@@ -274,6 +245,6 @@
     CURVE_A, CURVE_B, PLOT_SIZE, SAMPLES,
     createSvgElement, toScreen, isOnPage, nearestSampleIndex, addRealPoints,
     formatReal, formatRealPoint, drawCurveBase, drawLineThrough, drawConstruction,
-    placeLabels, clientToPlot, attachCurveDragging, drawHandle,
+    clientToPlot, attachCurveDragging, drawHandle,
   };
 })();

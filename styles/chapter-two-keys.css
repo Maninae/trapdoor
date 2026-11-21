@@ -1,25 +1,10 @@
 /*
- * Chapter 5 (two keys) styles, layered on shared.css.
+ * Chapter 5 (two keys) styles, layered on the shared layer.
  *
- * - Same people, same hues as chapter 4: Alice teal, Bob violet, Eve soft ink. Public keys
+ * - People hues come from tokens.css (Alice teal, Bob violet, Eve soft ink). Public keys
  *   carry no person hue; Bob's private key and the locked padlock wear his violet.
  * - The challenge number keeps the site's red (--accent-2), as in chapter 3's puzzle.
  */
-
-:root {
-  --person-alice: #0f6e66;
-  --person-bob: #74389a;
-  --person-eve: var(--ink-soft);
-  --person-bob-soft: #efe6f4;
-}
-
-.name-alice { color: var(--person-alice); font-weight: 700; }
-.name-bob { color: var(--person-bob); font-weight: 700; }
-.name-eve { color: var(--person-eve); font-weight: 700; }
-
-@media (min-width: 760px) {
-  .widget.widget-stack { grid-template-columns: minmax(0, 1fr); }
-}
 
 /* ---------- factoring race ---------- */
 
@@ -108,22 +93,6 @@
 
 /* ---------- keys and steps ---------- */
 
-.tag {
-  display: inline-block;
-  font-family: var(--font-ui);
-  font-size: 0.72rem;
-  font-weight: 700;
-  line-height: 1;
-  padding: 3px 6px;
-  border-radius: 4px;
-  border: 1px solid currentColor;
-  white-space: nowrap;
-  vertical-align: 0.1em;
-}
-
-.tag-public { color: var(--ink-soft); background: var(--bg); }
-.tag-bob { color: var(--person-bob); background: var(--person-bob-soft); }
-
 .key-cards { display: flex; flex-direction: column; gap: var(--space-1); }
 
 .key-card {
@@ -136,34 +105,10 @@
   font-variant-numeric: tabular-nums;
 }
 
-.rsa-steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  font-variant-numeric: tabular-nums;
-}
-
-.rsa-steps li {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 2px var(--space-2);
-  padding: var(--space-1) var(--space-2);
-  border-left: 4px solid var(--rule);
-  background: var(--surface);
-  border-radius: 0 6px 6px 0;
-  line-height: 1.4;
-  overflow-wrap: anywhere;
-}
-
+/* .rsa-steps is a .step-list (components.css); long numbers here may break anywhere. */
+.rsa-steps li { overflow-wrap: anywhere; }
 .rsa-steps li > span { min-width: 0; }
-.rsa-steps li.step-alice { border-left-color: var(--person-alice); }
-.rsa-steps li.step-bob { border-left-color: var(--person-bob); }
-.rsa-steps .step-who { font-family: var(--font-ui); font-size: var(--t-sm); min-width: 5.5rem; }
-.rsa-steps .step-shared { color: var(--accent); }
+.rsa-steps .step-who { min-width: 5.5rem; }
 
 #rsa-widget .readout-locked { color: var(--person-bob); }
 

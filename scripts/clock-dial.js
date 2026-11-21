@@ -3,7 +3,7 @@
  *
  * - Hour 0 sits at the top (where a wall clock shows 12) and hours run clockwise.
  * - The dial is redrawn from scratch on every update; at most 30 hours it costs nothing.
- * - Colors come from CSS classes (styles/shared.css), never from hex values in here.
+ * - Colors come from CSS classes (styles/widgets.css), never from hex values in here.
  */
 (function () {
   "use strict";

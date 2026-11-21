@@ -1,31 +1,8 @@
 /*
  * Chapter "Signatures": the two-card sign-and-check flow and the certificate chain figure.
- * Colors come only from the tokens in shared.css. Blue marks Bob's signature (what was made),
- * green a passing check, red a failed one.
+ * Colors come only from tokens.css. Bob's name and his private-key signature wear his violet
+ * (as in chapter 5), green marks a passing check, red a failed one.
  */
-
-/* ---------- shared bits for this chapter ---------- */
-
-.widget-stack { grid-template-columns: minmax(0, 1fr); }
-@media (min-width: 760px) {
-  .widget.widget-stack { grid-template-columns: minmax(0, 1fr); align-items: start; }
-}
-
-.text-field { display: flex; flex-direction: column; gap: var(--space-1); }
-.text-field label { font-family: var(--font-ui); font-size: var(--t-sm); color: var(--ink-soft); }
-
-.text-input {
-  min-height: var(--touch);
-  width: 100%;
-  min-width: 0;
-  padding: 0 var(--space-3);
-  font-family: var(--font-ui);
-  font-size: var(--t-base);
-  color: var(--ink);
-  background: var(--surface);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-}
 
 /* ---------- sign and check ---------- */
 
@@ -76,7 +53,7 @@
   white-space: nowrap;
 }
 
-.sign-number-key { color: var(--accent); }
+.sign-number-key { color: var(--person-bob); }
 .sign-number-stale { color: var(--ink-soft); text-decoration: line-through; font-weight: 400; }
 .sign-number-bad { color: var(--accent-2); }
 

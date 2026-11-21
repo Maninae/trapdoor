@@ -1,0 +1,143 @@
+/*
+ * Landing page (index.html) and 404 page: the name, one line, then the map of arcs and chapters.
+ *
+ * - First look: the name, then chapter 1's card, the only card with the accent border and the
+ *   squared-paper background the widgets use.
+ * - Every other card is quiet: ink glyph with one blue mark, number, title, one-line hook.
+ */
+
+.landing {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-4) var(--space-8);
+}
+
+.landing-name {
+  font-size: clamp(3.2rem, 11vw, 5.2rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-4);
+}
+
+.landing-pitch {
+  max-width: 37rem;
+  margin: 0;
+  font-size: var(--t-md);
+  line-height: 1.45;
+}
+
+/* ---------- arcs ---------- */
+
+.arc { margin-top: var(--space-12); }
+
+.arc-heading {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin: 0;
+  font-size: var(--t-lg);
+}
+
+.arc-number {
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.arc-line {
+  margin: var(--space-1) 0 var(--space-4);
+  color: var(--ink-soft);
+}
+
+.map-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+}
+
+/* Two columns: the arcs hold 2, 4, 1 and 4 chapters, so rows fill without orphans. */
+@media (min-width: 760px) {
+  .map-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.map-item { display: flex; }
+
+.map-card {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+  padding: var(--space-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.map-card:hover { border-color: var(--ink-soft); }
+.map-card:hover .map-title { text-decoration: underline; text-underline-offset: 0.15em; }
+
+.map-card-start {
+  border: 2px solid var(--accent);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-step) var(--grid-step);
+}
+
+.map-card-start:hover { border-color: var(--accent); }
+
+.map-glyph { width: 3.5rem; height: 3.5rem; color: var(--ink); }
+.glyph-accent { fill: var(--accent); }
+.glyph-text { font-family: var(--font-ui); font-size: 12px; font-weight: 700; fill: currentColor; }
+.glyph-accent-text { fill: var(--accent); }
+
+.map-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+
+.map-start {
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.map-title { font-size: var(--t-md); font-weight: 600; line-height: 1.25; }
+
+.map-number {
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin-right: var(--space-2);
+}
+
+.map-hook { color: var(--ink-soft); font-size: 0.94rem; line-height: 1.45; }
+
+/* No-JS fallback list, replaced by landing.js. */
+.map-fallback { margin: var(--space-8) 0 0; padding-left: 1.5rem; }
+.map-fallback li { padding: var(--space-1) 0; }
+
+/* ---------- footer ---------- */
+
+.site-footer {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-12);
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+
+.site-footer a { color: var(--ink-soft); display: inline-block; padding: var(--space-2) 0; }
+
+@media (max-width: 759px) {
+  .landing { padding-top: var(--space-8); }
+  .arc { margin-top: var(--space-8); }
+}

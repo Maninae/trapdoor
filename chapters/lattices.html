@@ -3,14 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lost in the grid | Trapdoor</title>
+  <title>Lost in the grid: lattice cryptography and ML-KEM | Trapdoor</title>
   <meta name="description" content="A hands-on lesson on lattices: two pairs of arrows build the same grid of dots, and finding the nearest dot with the wrong pair is a problem nobody knows how to solve quickly.">
+  <link rel="canonical" href="https://maninae.github.io/trapdoor/chapters/lattices.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Trapdoor">
+  <meta property="og:title" content="Lost in the grid: lattice cryptography and ML-KEM">
+  <meta property="og:description" content="A hands-on lesson on lattices: two pairs of arrows build the same grid of dots, and finding the nearest dot with the wrong pair is a problem nobody knows how to solve quickly.">
+  <meta property="og:url" content="https://maninae.github.io/trapdoor/chapters/lattices.html">
+  <meta property="og:image" content="https://maninae.github.io/trapdoor/assets/preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Trapdoor: the site name beside the elliptic curve widget from chapter 7, drawn on squared paper.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lost in the grid: lattice cryptography and ML-KEM">
+  <meta name="twitter:description" content="A hands-on lesson on lattices: two pairs of arrows build the same grid of dots, and finding the nearest dot with the wrong pair is a problem nobody knows how to solve quickly.">
+  <meta name="twitter:image" content="https://maninae.github.io/trapdoor/assets/preview.png">
   <meta name="theme-color" content="#f4f3ee">
+  <meta name="color-scheme" content="light">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/icons/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
-  <link rel="stylesheet" href="../styles/shared.css">
+  <link rel="stylesheet" href="../styles/tokens.css">
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/widgets.css">
+  <link rel="stylesheet" href="../styles/controls.css">
+  <link rel="stylesheet" href="../styles/components.css">
   <link rel="stylesheet" href="../styles/chapter-lattices.css">
 </head>
 <body>
@@ -111,7 +133,7 @@
       <h2 id="standard-heading">Now the standard</h2>
       <p>In August 2024 NIST, the US standards body, published two lattice standards built on learning with errors: ML-KEM for agreeing on a key and ML-DSA for signatures. The price is size, kilobytes where <a href="curves.html">curves</a> need dozens of bytes.</p>
       <div class="table-scroll" role="region" aria-label="Key sizes" tabindex="0">
-        <table class="size-table">
+        <table class="data-table size-table">
           <thead>
             <tr><th scope="col">Scheme</th><th scope="col" class="numeric">Public key (bytes)</th><th scope="col" class="numeric">Ciphertext or signature (bytes)</th></tr>
           </thead>
@@ -131,11 +153,17 @@
     </section>
   </main>
 
+  <nav class="chapter-nav" aria-label="Chapters">
+    <p class="chapter-nav-all"><a href="../index.html">All chapters</a></p>
+  </nav>
+
   <script src="../scripts/core.js"></script>
   <script src="../scripts/glossary.js"></script>
   <script src="../scripts/lattices-helpers.js"></script>
   <script src="../scripts/widget-lattices-grid.js"></script>
   <script src="../scripts/widget-lattices-nearest.js"></script>
   <script src="../scripts/widget-lattices-noise.js"></script>
+  <script src="../scripts/chapters.js"></script>
+  <script src="../scripts/chapter-nav.js"></script>
 </body>
 </html>

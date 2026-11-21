@@ -1,6 +1,6 @@
 /*
  * Chapter 7 (curves) styles: the smooth curve plot, the whole-number dot grid, and the key-size card.
- * Loaded after shared.css; colors come only from its tokens.
+ * Loaded after the shared layer; colors come only from tokens.css.
  */
 
 .curve-plot {
@@ -85,19 +85,6 @@
 }
 
 /* ---------- key-size card ---------- */
-
-.fact-card {
-  max-width: 36rem;
-  margin: var(--space-8) 0 0;
-  padding: var(--space-4) var(--space-4) var(--space-2);
-  border: 1px solid var(--rule);
-  border-left: 4px solid var(--accent);
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.fact-card h2 { font-size: var(--t-md); }
-.fact-card p { margin: 0 0 var(--space-3); }
 
 .key-size-bars { display: grid; gap: var(--space-2); margin: 0 0 var(--space-4); }
 .key-size-row { display: grid; grid-template-columns: 6.5rem 1fr; gap: var(--space-2); align-items: center; }

@@ -1,9 +1,8 @@
 /*
- * Chapter 10 (hash signatures) styles, layered on shared.css. Colors come only from tokens.
+ * Chapter 10 (hash signatures) styles, layered on the shared layer. Colors come only from tokens.css.
  *
  * - Lamport key grid: gray = public fingerprint, blue = revealed secret, red outline = a
  *   column where both secrets are public (the danger the reader caused).
- * - .card is repeated from the other late chapters so each page stays standalone.
  */
 
 /* ---------- Lamport key grid ---------- */
@@ -76,22 +75,6 @@
   .key-cell { font-size: 0.85rem; }
 }
 
-/* ---------- cards ---------- */
-
-.card {
-  margin: var(--space-12) 0 var(--space-6);
-  padding: var(--space-6) var(--space-4) var(--space-4);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.card h2 { font-size: var(--t-md); }
-.card > p { max-width: 36rem; margin: 0 0 var(--space-4); }
-
-@media (min-width: 760px) {
-  .card { padding: var(--space-6); }
-}
 
 /* ---------- Merkle tree ---------- */
 

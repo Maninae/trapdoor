@@ -1,0 +1,171 @@
+/*
+ * Controls layer: buttons, steppers, text fields, the hop and try lists, and the forward demo.
+ *
+ * - Every control is at least --touch (44px) tall; nothing depends on hover.
+ * - Pressed toggles and primary actions fill with --accent.
+ */
+
+.widget-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
+}
+
+.stepper { display: flex; flex-direction: column; gap: var(--space-1); }
+
+.stepper-label, .group-label, .guess-form label, .forward-demo label, .text-field label {
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+
+.stepper-row, .guess-row { display: flex; gap: var(--space-1); }
+
+.stepper-button,
+.stepper-input,
+.guess-row input,
+.forward-input,
+.action-row button,
+.guess-row button,
+.operation-toggle button,
+.prime-buttons button {
+  min-height: var(--touch);
+  font-family: var(--font-ui);
+  font-size: var(--t-base);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.stepper-button {
+  min-width: var(--touch);
+  font-size: var(--t-md);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.stepper-input, .guess-row input {
+  width: 5.5rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+}
+
+.stepper-input::-webkit-inner-spin-button,
+.stepper-input::-webkit-outer-spin-button,
+.guess-row input::-webkit-inner-spin-button,
+.guess-row input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+.stepper-slider {
+  width: 100%;
+  min-width: 12rem;
+  height: var(--touch);
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+button { cursor: pointer; }
+button:disabled { cursor: default; opacity: 0.45; }
+
+.action-row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.action-row button, .guess-row button { padding: 0 var(--space-4); }
+
+.button-primary,
+.operation-toggle button[aria-pressed="true"],
+.prime-buttons button[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+}
+
+.action-row .button-primary, .guess-row .button-primary { background: var(--accent); color: var(--on-accent); }
+
+.operation-toggle { display: flex; gap: var(--space-1); }
+.operation-toggle button { padding: 0 var(--space-6); }
+
+.prime-picker { display: flex; flex-direction: column; gap: var(--space-1); }
+.prime-buttons { display: flex; flex-wrap: wrap; gap: var(--space-1); }
+.prime-buttons button { min-width: var(--touch); font-variant-numeric: tabular-nums; }
+
+/* ---------- text fields ---------- */
+
+.text-field { display: flex; flex-direction: column; gap: var(--space-1); }
+
+.text-input {
+  min-height: var(--touch);
+  width: 100%;
+  min-width: 0;
+  padding: 0 var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--t-base);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+/* ---------- hop and try lists ---------- */
+
+.hop-list, .try-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.hop-list li, .try-list li {
+  padding: var(--space-1) var(--space-2);
+  border-radius: 6px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  font-size: 0.94rem;
+  white-space: nowrap;
+}
+
+.try-list li.try-hit { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+.guess-form { display: flex; flex-direction: column; gap: var(--space-1); }
+
+.tries { margin: 0; font-family: var(--font-ui); color: var(--ink-soft); }
+.tries-count { font-family: var(--font-body); font-size: var(--t-lg); font-weight: 600; color: var(--ink); }
+
+/* ---------- forward demo: one big calculation on a 39-digit clock ---------- */
+
+.forward-demo {
+  margin: var(--space-4) 0 0;
+  padding: var(--space-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.forward-input {
+  width: 100%;
+  padding: 0 var(--space-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.forward-output {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.forward-landing {
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--accent);
+  overflow-wrap: anywhere;
+}
+
+.forward-time, .forward-demo figcaption { color: var(--ink-soft); font-size: 0.94rem; }

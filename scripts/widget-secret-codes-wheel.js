@@ -7,7 +7,7 @@
  *
  * - The outer ring is the plain alphabet; the inner ring is the same alphabet turned by
  *   the shift, so each outer letter sits over the letter it becomes.
- * - The inner ring turns with a CSS transition, which shared.css removes under
+ * - The inner ring turns with a CSS transition, which base.css removes under
  *   prefers-reduced-motion.
  */
 (function () {

@@ -1,0 +1,215 @@
+/*
+ * Components layer: pieces used by several chapters.
+ *
+ * - Glossary notes: button.term opens the aside.term-note right after its paragraph.
+ * - .card (a boxed aside section), .fact-card (a short side fact with a blue edge).
+ * - .data-table inside .table-scroll: numbers right-aligned, cells never wrap.
+ * - People: .name-alice / .name-bob / .name-eve for names, .tag-* for "who may see this",
+ *   .step-list rows edged in the actor's hue. Same person, same color on every page.
+ * - .chapter-nav: previous / next cards at the bottom of each chapter (scripts/chapter-nav.js).
+ */
+
+/* ---------- glossary terms ---------- */
+
+button.term {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  position: relative;
+  cursor: pointer;
+  text-decoration: underline dotted var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+
+/* An invisible halo enlarges the tap area to 44px tall without moving the line or the focus ring. */
+button.term::before {
+  content: "";
+  position: absolute;
+  inset: -0.6em -0.15em;
+}
+
+button.term[aria-expanded="true"] { color: var(--accent); }
+
+.term-note {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  margin: 0 0 var(--space-4);
+  font-size: 0.94rem;
+}
+
+.term-note p { margin: 0 0 var(--space-2); }
+
+.term-note-close {
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  min-height: var(--touch);
+  padding: 0 var(--space-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+/* ---------- cards ---------- */
+
+.card {
+  margin: var(--space-12) 0 var(--space-6);
+  padding: var(--space-6) var(--space-4) var(--space-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.card h2 { font-size: var(--t-md); }
+.card > p { max-width: 36rem; margin: 0 0 var(--space-4); }
+
+@media (min-width: 760px) {
+  .card { padding: var(--space-6); }
+}
+
+.fact-card {
+  max-width: 36rem;
+  margin: var(--space-8) 0 0;
+  padding: var(--space-4) var(--space-4) var(--space-2);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.fact-card h2 { font-size: var(--t-md); }
+.fact-card p { margin: 0 0 var(--space-3); }
+
+/* ---------- tables ---------- */
+
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.data-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-variant-numeric: tabular-nums;
+}
+
+.data-table th, .data-table td {
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--grid-line);
+}
+
+.data-table thead th {
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  font-weight: 700;
+  color: var(--ink-soft);
+  vertical-align: bottom;
+}
+
+.data-table tbody th { font-weight: 400; }
+.data-table tbody tr:last-child > * { border-bottom: 0; }
+.data-table .numeric { text-align: right; }
+
+/* ---------- people ---------- */
+
+.name-alice { color: var(--person-alice); font-weight: 700; }
+.name-bob { color: var(--person-bob); font-weight: 700; }
+.name-eve { color: var(--person-eve); font-weight: 700; }
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 3px 6px;
+  border-radius: 4px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+  vertical-align: 0.1em;
+}
+
+.tag-public { color: var(--ink-soft); background: var(--bg); }
+.tag-alice { color: var(--person-alice); background: var(--person-alice-soft); }
+.tag-bob { color: var(--person-bob); background: var(--person-bob-soft); }
+
+/* A list of who-did-what steps; each row's left edge wears the actor's hue. */
+.step-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.step-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-left: 4px solid var(--rule);
+  background: var(--surface);
+  border-radius: 0 6px 6px 0;
+  line-height: 1.4;
+}
+
+.step-list li.step-alice { border-left-color: var(--person-alice); }
+.step-list li.step-bob { border-left-color: var(--person-bob); }
+.step-list .step-who { font-family: var(--font-ui); font-size: var(--t-sm); }
+.step-list .step-shared { color: var(--accent); }
+
+/* ---------- previous / next chapter ---------- */
+
+.chapter-nav {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 var(--space-4) var(--space-12);
+  font-family: var(--font-ui);
+}
+
+.chapter-nav-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  margin: 0 0 var(--space-4);
+}
+
+@media (min-width: 760px) {
+  .chapter-nav-pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .chapter-nav-next { grid-column: 2; }
+}
+
+.chapter-nav-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-height: var(--touch);
+  padding: var(--space-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.chapter-nav-next { text-align: right; border-color: var(--accent); }
+.chapter-nav-kicker { font-size: var(--t-sm); color: var(--ink-soft); }
+.chapter-nav-next .chapter-nav-kicker { color: var(--accent); font-weight: 700; }
+.chapter-nav-title { font-family: var(--font-body); font-size: var(--t-md); font-weight: 600; line-height: 1.25; }
+.chapter-nav-hook { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.4; }
+.chapter-nav-card:hover .chapter-nav-title { text-decoration: underline; text-underline-offset: 0.15em; }
+.chapter-nav-all { font-size: var(--t-sm); }
+.chapter-nav-all a { display: inline-block; padding: var(--space-3) 0; }

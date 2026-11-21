@@ -1,6 +1,6 @@
 /*
- * Chapter 8 (quantum) styles: the powers bar chart, the factor walk, the waves-as-arrows
- * cartoon, and the Grover card. Loaded after shared.css; colors come only from its tokens.
+ * Chapter 8 (quantum) styles: the powers bar chart, the factor walk, and the waves-as-arrows
+ * cartoon. Loaded after the shared layer; colors come only from tokens.css.
  */
 
 /* A widget whose picture is wide: picture on top, controls and readout beneath it. */
@@ -91,20 +91,5 @@
   color: var(--ink-soft);
   font-size: 0.94rem;
 }
-
-/* ---------- card ---------- */
-
-.fact-card {
-  max-width: 36rem;
-  margin: var(--space-8) 0 0;
-  padding: var(--space-4) var(--space-4) var(--space-2);
-  border: 1px solid var(--rule);
-  border-left: 4px solid var(--accent);
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.fact-card h2 { font-size: var(--t-md); }
-.fact-card p { margin: 0 0 var(--space-3); }
 
 .widget-settings, .readout-column { display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }

@@ -3,14 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Signatures | Trapdoor</title>
+  <title>Signatures: digital signatures and website certificates | Trapdoor</title>
   <meta name="description" content="How your browser knows a website is who it claims to be: sign a message with a private key, tamper with one letter, and watch the check fail.">
+  <link rel="canonical" href="https://maninae.github.io/trapdoor/chapters/signatures.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Trapdoor">
+  <meta property="og:title" content="Signatures: digital signatures and website certificates">
+  <meta property="og:description" content="How your browser knows a website is who it claims to be: sign a message with a private key, tamper with one letter, and watch the check fail.">
+  <meta property="og:url" content="https://maninae.github.io/trapdoor/chapters/signatures.html">
+  <meta property="og:image" content="https://maninae.github.io/trapdoor/assets/preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Trapdoor: the site name beside the elliptic curve widget from chapter 7, drawn on squared paper.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Signatures: digital signatures and website certificates">
+  <meta name="twitter:description" content="How your browser knows a website is who it claims to be: sign a message with a private key, tamper with one letter, and watch the check fail.">
+  <meta name="twitter:image" content="https://maninae.github.io/trapdoor/assets/preview.png">
   <meta name="theme-color" content="#f4f3ee">
+  <meta name="color-scheme" content="light">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/icons/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
-  <link rel="stylesheet" href="../styles/shared.css">
+  <link rel="stylesheet" href="../styles/tokens.css">
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/widgets.css">
+  <link rel="stylesheet" href="../styles/controls.css">
+  <link rel="stylesheet" href="../styles/components.css">
   <link rel="stylesheet" href="../styles/chapter-signatures.css">
 </head>
 <body>
@@ -25,9 +47,9 @@
     <figure class="widget widget-stack" id="sign-widget">
       <div class="sign-flow">
         <section class="sign-card" aria-labelledby="bob-card-title">
-          <h2 class="sign-card-title" id="bob-card-title">Bob signs</h2>
+          <h2 class="sign-card-title" id="bob-card-title"><span class="name-bob">Bob</span> signs</h2>
           <div class="text-field">
-            <label for="bob-message">Bob's message</label>
+            <label for="bob-message"><span class="name-bob">Bob's</span> message</label>
             <input id="bob-message" class="bob-input text-input" type="text" maxlength="60" autocomplete="off" spellcheck="false">
           </div>
           <dl class="sign-steps">
@@ -104,10 +126,16 @@
     </section>
   </main>
 
+  <nav class="chapter-nav" aria-label="Chapters">
+    <p class="chapter-nav-all"><a href="../index.html">All chapters</a></p>
+  </nav>
+
   <script src="../scripts/core.js"></script>
   <script src="../scripts/glossary.js"></script>
   <script src="../scripts/signatures-helpers.js"></script>
   <script src="../scripts/widget-signatures-sign.js"></script>
   <script src="../scripts/widget-signatures-chain.js"></script>
+  <script src="../scripts/chapters.js"></script>
+  <script src="../scripts/chapter-nav.js"></script>
 </body>
 </html>

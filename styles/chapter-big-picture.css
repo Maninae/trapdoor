@@ -1,10 +1,9 @@
 /*
- * Chapter 11 (big picture) styles, layered on shared.css. Colors come only from tokens.
+ * Chapter 11 (big picture) styles, layered on the shared layer. Colors come only from tokens.css.
  *
  * - Size chart: blue bar = public key, gray bar = signature or ciphertext. Bar width is
  *   --bar-fraction percent of the track minus --label-reserve, so the value label always fits.
  * - Tick lines share that formula and an inset equal to the row padding, so they line up.
- * - .card, .table-scroll are repeated from the other late chapters so each page stands alone.
  */
 
 .widget-sizes { --label-reserve: 6.5rem; --row-pad: var(--space-2); }
@@ -51,6 +50,19 @@
   color: var(--ink-soft);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+/* The leftmost label starts at its line so it never hangs past the chart edge. */
+.size-tick:first-child .size-tick-label { transform: none; }
+
+/* Phone: five log labels crowd each other, so show every other one (10, 1k, 100k). */
+@media (max-width: 759px) {
+  .size-ticks:has(.size-tick:nth-child(5)) .size-tick:nth-child(even) .size-tick-label { visibility: hidden; }
+}
+
+/* A paper-colored halo keeps the dashed tick lines from running through row text. */
+.size-name, .size-value {
+  text-shadow: 0 0 2px var(--surface), 0 0 2px var(--surface), 0 0 4px var(--surface);
 }
 
 .size-axis { height: 1.5rem; }
@@ -103,56 +115,12 @@
 
 /* ---------- comparison table ---------- */
 
-.table-scroll {
-  overflow-x: auto;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.family-table {
-  border-collapse: collapse;
-  width: 100%;
-  font-size: 0.9rem;
-  font-variant-numeric: tabular-nums;
-}
-
-.family-table th, .family-table td {
-  padding: var(--space-2) var(--space-2);
-  text-align: left;
-  white-space: nowrap;
-  border-bottom: 1px solid var(--grid-line);
-}
-
-.family-table thead th {
-  font-family: var(--font-ui);
-  font-size: var(--t-sm);
-  font-weight: 700;
-  color: var(--ink-soft);
-  vertical-align: bottom;
-}
-
+/* .family-table is a .data-table (components.css), set a little tighter. */
+.family-table { font-size: 0.9rem; }
+.family-table th, .family-table td { padding: var(--space-2); }
 .family-table tbody th { font-weight: 600; }
 .family-table tbody th a { color: var(--ink); }
-.family-table tbody tr:last-child > * { border-bottom: 0; }
-.family-table .numeric { text-align: right; }
 .family-table .verdict-broken { color: var(--accent-2); font-weight: 600; }
 
 .table-note { margin: var(--space-2) 0 0; color: var(--ink-soft); font-size: 0.94rem; }
 
-/* ---------- cards ---------- */
-
-.card {
-  margin: var(--space-12) 0 var(--space-6);
-  padding: var(--space-6) var(--space-4) var(--space-4);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.card h2 { font-size: var(--t-md); }
-.card > p { max-width: 36rem; margin: 0 0 var(--space-4); }
-
-@media (min-width: 760px) {
-  .card { padding: var(--space-6); }
-}

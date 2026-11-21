@@ -1,10 +1,8 @@
 /*
- * Chapter 9 (lattices) styles, layered on shared.css. Colors come only from shared tokens.
+ * Chapter 9 (lattices) styles, layered on the shared layer. Colors come only from tokens.css.
  *
  * - Arrow A is the blue accent, arrow B is ink, so the two directions never blur together.
  * - The red accent-2 is reserved for the game's target point, as everywhere on the site.
- * - .card, .table-scroll and .size-table are repeated in the other late chapters' sheets
- *   so each page stays standalone.
  */
 
 .lattice-svg {
@@ -44,22 +42,6 @@
 .operation-toggle { flex-wrap: wrap; }
 .operation-toggle button { padding: 0 var(--space-4); }
 
-/* ---------- cards ---------- */
-
-.card {
-  margin: var(--space-12) 0 var(--space-6);
-  padding: var(--space-6) var(--space-4) var(--space-4);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.card h2 { font-size: var(--t-md); }
-.card > p { max-width: 36rem; margin: 0 0 var(--space-4); }
-
-@media (min-width: 760px) {
-  .card { padding: var(--space-6); }
-}
 
 /* ---------- small-errors demo ---------- */
 
@@ -95,37 +77,7 @@
 
 /* ---------- size table ---------- */
 
-.table-scroll {
-  overflow-x: auto;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.size-table {
-  border-collapse: collapse;
-  width: 100%;
-  font-variant-numeric: tabular-nums;
-}
-
-.size-table th, .size-table td {
-  padding: var(--space-2) var(--space-3);
-  text-align: left;
-  white-space: nowrap;
-  border-bottom: 1px solid var(--grid-line);
-}
-
-.size-table thead th {
-  font-family: var(--font-ui);
-  font-size: var(--t-sm);
-  font-weight: 700;
-  color: var(--ink-soft);
-  vertical-align: bottom;
-}
-
-.size-table tbody th { font-weight: 400; }
-.size-table tbody tr:last-child > * { border-bottom: 0; }
-.size-table .numeric { text-align: right; }
+/* .size-table is a .data-table (components.css). */
 
 /* Phone: headers may wrap so the numbers fit without scrolling; body cells never wrap. */
 @media (max-width: 759px) {
