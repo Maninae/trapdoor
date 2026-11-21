@@ -1,0 +1,137 @@
+/*
+ * Chapter "Signatures": the two-card sign-and-check flow and the certificate chain figure.
+ * Colors come only from the tokens in shared.css. Blue marks Bob's signature (what was made),
+ * green a passing check, red a failed one.
+ */
+
+/* ---------- shared bits for this chapter ---------- */
+
+.widget-stack { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 760px) {
+  .widget.widget-stack { grid-template-columns: minmax(0, 1fr); align-items: start; }
+}
+
+.text-field { display: flex; flex-direction: column; gap: var(--space-1); }
+.text-field label { font-family: var(--font-ui); font-size: var(--t-sm); color: var(--ink-soft); }
+
+.text-input {
+  min-height: var(--touch);
+  width: 100%;
+  min-width: 0;
+  padding: 0 var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--t-base);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+/* ---------- sign and check ---------- */
+
+.sign-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+}
+
+@media (min-width: 760px) {
+  .sign-flow { grid-template-columns: minmax(0, 1fr) 3.5rem minmax(0, 1fr); align-items: stretch; }
+}
+
+.sign-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  min-width: 0;
+}
+
+.sign-card-title {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--t-base);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.sign-steps { margin: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.sign-steps > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px dashed var(--rule);
+}
+.sign-steps dt { font-family: var(--font-ui); font-size: var(--t-sm); color: var(--ink-soft); }
+.sign-steps dd {
+  margin: 0;
+  font-size: var(--t-lg);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.sign-number-key { color: var(--accent); }
+.sign-number-stale { color: var(--ink-soft); text-decoration: line-through; font-weight: 400; }
+.sign-number-bad { color: var(--accent-2); }
+
+.sign-status { margin: 0; font-size: 0.94rem; line-height: 1.45; color: var(--ink-soft); }
+
+.sign-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+
+.sign-arrow-svg {
+  width: 2rem;
+  height: 2rem;
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: rotate(90deg);
+}
+
+@media (min-width: 760px) {
+  .sign-arrow { flex-direction: column; text-align: center; }
+  .sign-arrow-svg { transform: none; }
+  .sign-arrow span { font-size: 0.7rem; line-height: 1.2; }
+}
+
+.verdict-ok { color: var(--ok); font-size: var(--t-xl); }
+.verdict-bad { color: var(--accent-2); font-size: var(--t-xl); }
+
+/* ---------- certificate chain ---------- */
+
+@media (min-width: 760px) {
+  .widget.chain-widget { grid-template-columns: minmax(0, 22rem) minmax(0, 1fr); }
+}
+
+.chain-svg { display: block; width: 100%; max-width: 22rem; height: auto; margin: 0 auto; }
+
+.chain-card { fill: var(--surface); stroke: var(--rule); stroke-width: 1.5; }
+.chain-card-root { stroke: var(--ink-soft); stroke-width: 2; }
+.chain-card-site { stroke: var(--ok); stroke-width: 2.5; }
+.chain-title { fill: var(--ink); font-family: var(--font-body); font-weight: 600; font-size: 19px; }
+.chain-detail { fill: var(--ink-soft); font-family: var(--font-ui); font-size: 14px; }
+.chain-arrow { stroke: var(--accent); stroke-width: 3; }
+.chain-arrowhead { fill: var(--accent); }
+.chain-arrow-label { fill: var(--accent); font-family: var(--font-ui); font-size: 15px; font-weight: 700; }
+.chain-padlock-shackle { fill: none; stroke: var(--ok); stroke-width: 4; stroke-linecap: round; }
+.chain-padlock-body { fill: var(--ok); }
+.chain-padlock-hole { fill: var(--surface); }
+
+.chain-caption p { margin: 0 0 var(--space-3); }
+.chain-caption-strong { font-size: var(--t-md); font-weight: 600; line-height: 1.35; }
+.widget.chain-widget figcaption { grid-column: auto; }

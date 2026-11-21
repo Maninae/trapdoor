@@ -1,0 +1,111 @@
+/*
+ * Chapter 7 (curves) styles: the smooth curve plot, the whole-number dot grid, and the key-size card.
+ * Loaded after shared.css; colors come only from its tokens.
+ */
+
+.curve-plot {
+  display: block;
+  width: 100%;
+  max-width: 23rem;
+  height: auto;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@media (max-width: 759px) {
+  .widget-hero .curve-plot { max-width: 330px; }
+}
+
+@media (min-width: 760px) {
+  .widget-hero .curve-plot { max-width: 25rem; }
+}
+
+/* ---------- smooth curve marks ---------- */
+
+.curve-axis { stroke: var(--rule); stroke-width: 1.5; }
+.curve-path { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; }
+.curve-line { stroke: var(--accent-soft); stroke-width: 3; }
+.curve-flip { stroke: var(--ink-soft); stroke-width: 2; stroke-dasharray: 6 5; }
+.curve-third { fill: var(--surface); stroke: var(--ink-soft); stroke-width: 2.5; }
+.curve-sum { fill: var(--accent); }
+.curve-hop-dot { fill: var(--accent-soft); }
+.curve-handle { fill: var(--ink); }
+.curve-handle-ring { fill: none; stroke: transparent; stroke-width: 3; }
+.curve-handle-group { cursor: grab; touch-action: none; outline: none; }
+.curve-handle-group:active { cursor: grabbing; }
+.curve-handle-group:focus-visible .curve-handle-ring { stroke: var(--accent); }
+.curve-handle-hit { fill: transparent; }
+.curve-label { font-family: var(--font-ui); font-size: 17px; font-weight: 700; fill: var(--ink); }
+.curve-label-sum { fill: var(--accent); }
+.curve-label-soft { fill: var(--ink-soft); font-weight: 400; font-size: 14px; }
+
+/* ---------- whole-number grid marks ---------- */
+
+.grid-frame { fill: none; stroke: var(--rule); stroke-width: 1.5; }
+.grid-axis-label { font-family: var(--font-ui); font-size: 14px; fill: var(--ink-soft); }
+.grid-dot { fill: var(--ink-soft); }
+.grid-dot-visited { fill: var(--accent-soft); }
+.grid-dot-landed { fill: var(--accent); }
+.grid-dot-start { fill: var(--surface); stroke: var(--accent); stroke-width: 3; }
+.grid-dot-target { fill: var(--surface); stroke: var(--accent-2); stroke-width: 3.5; }
+.grid-dot-miss { fill: var(--ink-soft); opacity: 0.5; }
+.grid-chord { stroke: var(--accent); stroke-width: 1.5; opacity: 0.3; }
+.grid-chord-latest { stroke-width: 3; opacity: 1; }
+.grid-arrowhead { fill: var(--accent); }
+.grid-tap-layer { fill: transparent; cursor: pointer; }
+
+/* ---------- readouts ---------- */
+
+.readout-coords {
+  font-size: var(--t-xl);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.construction-steps {
+  margin: 0;
+  padding-left: 1.3rem;
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+
+.construction-steps li + li { margin-top: var(--space-1); }
+
+.widget-hint {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+
+/* ---------- key-size card ---------- */
+
+.fact-card {
+  max-width: 36rem;
+  margin: var(--space-8) 0 0;
+  padding: var(--space-4) var(--space-4) var(--space-2);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.fact-card h2 { font-size: var(--t-md); }
+.fact-card p { margin: 0 0 var(--space-3); }
+
+.key-size-bars { display: grid; gap: var(--space-2); margin: 0 0 var(--space-4); }
+.key-size-row { display: grid; grid-template-columns: 6.5rem 1fr; gap: var(--space-2); align-items: center; }
+.key-size-name { font-family: var(--font-ui); font-size: var(--t-sm); color: var(--ink-soft); }
+.key-size-track { position: relative; display: flex; align-items: center; gap: var(--space-2); min-width: 0; }
+.key-size-bar { height: 1.6rem; border-radius: 4px; background: var(--accent); flex: none; }
+.key-size-bar-other { background: var(--ink-soft); }
+.key-size-value { font-family: var(--font-ui); font-size: var(--t-sm); font-weight: 700; color: var(--ink); white-space: nowrap; }
+.key-size-value-inside { position: absolute; left: var(--space-2); color: var(--on-accent); }
+
+.history-note { color: var(--ink-soft); font-size: 0.94rem; }

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signatures | Trapdoor</title>
+  <meta name="description" content="How your browser knows a website is who it claims to be: sign a message with a private key, tamper with one letter, and watch the check fail.">
+  <meta name="theme-color" content="#f4f3ee">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
+  <link rel="stylesheet" href="../styles/shared.css">
+  <link rel="stylesheet" href="../styles/chapter-signatures.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-name" href="../index.html">Trapdoor</a>
+    <span class="chapter-number">Chapter 6</span>
+  </header>
+
+  <main class="chapter">
+    <h1>Signatures</h1>
+
+    <figure class="widget widget-stack" id="sign-widget">
+      <div class="sign-flow">
+        <section class="sign-card" aria-labelledby="bob-card-title">
+          <h2 class="sign-card-title" id="bob-card-title">Bob signs</h2>
+          <div class="text-field">
+            <label for="bob-message">Bob's message</label>
+            <input id="bob-message" class="bob-input text-input" type="text" maxlength="60" autocomplete="off" spellcheck="false">
+          </div>
+          <dl class="sign-steps">
+            <div><dt>Fingerprint on the 3233-hour clock</dt><dd class="bob-fingerprint sign-number"></dd></div>
+            <div><dt>Signature: fingerprint<sup>2753</sup> (private key)</dt><dd class="bob-signature sign-number sign-number-key"></dd></div>
+          </dl>
+          <p class="sign-status" aria-live="polite"></p>
+          <div class="action-row">
+            <button type="button" class="button-primary" data-action="sign">Sign and send</button>
+          </div>
+        </section>
+
+        <div class="sign-arrow" aria-hidden="true">
+          <svg viewBox="0 0 40 40" class="sign-arrow-svg"><path d="M6 20 H32 M24 11 L33 20 L24 29" /></svg>
+          <span>message and signature travel</span>
+        </div>
+
+        <section class="sign-card" aria-labelledby="check-card-title">
+          <h2 class="sign-card-title" id="check-card-title">Anyone checks</h2>
+          <div class="text-field">
+            <label for="arrived-message">Message that arrived</label>
+            <input id="arrived-message" class="arrived-input text-input" type="text" maxlength="60" autocomplete="off" spellcheck="false">
+          </div>
+          <div class="action-row">
+            <button type="button" data-action="tamper">Change a letter</button>
+            <button type="button" data-action="restore">Undo</button>
+          </div>
+          <dl class="sign-steps">
+            <div><dt>Fingerprint of what arrived</dt><dd class="arrived-fingerprint sign-number"></dd></div>
+            <div><dt>Signature<sup>17</sup> (public key)</dt><dd class="opened-signature sign-number"></dd></div>
+          </dl>
+          <p class="readout verdict" aria-live="polite"></p>
+        </section>
+      </div>
+    </figure>
+
+    <section class="prose" aria-labelledby="who-heading">
+      <h2 id="who-heading">Who sent this?</h2>
+      <p>When you open your bank's website, your browser needs proof that it really is the bank and not an impostor in the middle. The proof is a <button type="button" class="term" aria-controls="note-signature" aria-expanded="false">digital signature</button>: a calculation only the private-key holder can do, which anyone can check with the public key.</p>
+      <aside class="term-note" id="note-signature" hidden>
+        <p>A digital signature ties a message to one key holder. Unlike a handwritten one, it is different for every message, so it cannot be cut out and pasted onto another. Whitfield Diffie and Martin Hellman proposed the idea in 1976, and RSA made it work soon after.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Digital_signature" target="_blank" rel="noopener">Digital signature on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>It runs Bob's keys from <a href="two-keys.html">chapter 5</a> in reverse. To sign, Bob raises a number to his private power, 2753, on the 3233-hour clock. To check, anyone raises the signature to the public power, 17. The number comes back to where it started only if 2753 was used.</p>
+    </section>
+
+    <section class="prose" aria-labelledby="fingerprint-heading">
+      <h2 id="fingerprint-heading">Sign the fingerprint</h2>
+      <p>Bob does not sign the message itself, which could be any length. He signs its <a href="scrambling.html">hash</a>, the fingerprint from chapter 2. Change one letter and the fingerprint changes, so the old signature no longer fits.</p>
+      <p>Our toy squeezes the fingerprint onto a 3233-hour clock, so a forger could get lucky 1 time in 3233. Real signatures use keys of 2048 bits or more, where luck is hopeless.</p>
+    </section>
+
+    <section class="prose" aria-labelledby="chain-heading">
+      <h2 id="chain-heading">The padlock is a chain of signatures</h2>
+      <p>How does your browser learn the bank's public key? The bank sends a certificate: its name and public key, signed by a <button type="button" class="term" aria-controls="note-authority" aria-expanded="false">certificate authority</button>. That authority's key is signed by another, up to a root authority whose key came built into your browser or phone.</p>
+      <aside class="term-note" id="note-authority" hidden>
+        <p>A certificate authority is an organization that checks who owns a website before signing its certificate. Browsers and operating systems ship with a short list of root authorities they trust. Let's Encrypt is one that signs certificates for free.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Certificate_authority" target="_blank" rel="noopener">Certificate authority on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+    </section>
+
+    <figure class="widget chain-widget" id="chain-figure">
+      <svg class="chain-svg" role="img" aria-label="A chain of three certificates"></svg>
+      <figcaption class="chain-caption">
+        <p>Your browser checks each signature with the public key one level up.</p>
+        <p class="chain-caption-strong">Every check passes: you see the padlock. One fails: you see a warning.</p>
+      </figcaption>
+    </figure>
+
+    <section class="prose closing">
+      <p class="bridge">RSA keys need thousands of bits to stay safe. Is there a trapdoor that does the same job with much smaller keys?</p>
+    </section>
+  </main>
+
+  <script src="../scripts/core.js"></script>
+  <script src="../scripts/glossary.js"></script>
+  <script src="../scripts/signatures-helpers.js"></script>
+  <script src="../scripts/widget-signatures-sign.js"></script>
+  <script src="../scripts/widget-signatures-chain.js"></script>
+</body>
+</html>

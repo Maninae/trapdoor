@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The blender | Trapdoor</title>
+  <meta name="description" content="Bits, XOR, and how modern ciphers stretch a short key through rounds of mixing. Then a real SHA-256 fingerprint you can type into.">
+  <meta name="theme-color" content="#f4f3ee">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
+  <link rel="stylesheet" href="../styles/shared.css">
+  <link rel="stylesheet" href="../styles/chapter-scrambling.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-name" href="../index.html">Trapdoor</a>
+    <span class="chapter-number">Chapter 2</span>
+  </header>
+
+  <main class="chapter">
+    <h1>The blender</h1>
+
+    <figure class="widget" id="xor-widget">
+      <div class="text-field xor-field">
+        <label for="xor-message">Your message (up to 6 letters)</label>
+        <input id="xor-message" class="message-input text-input" type="text" autocomplete="off" spellcheck="false">
+      </div>
+      <div class="xor-bits">
+        <p class="bit-legend">
+          <span class="legend-item"><span class="legend-swatch legend-message" aria-hidden="true"></span>message</span>
+          <span class="legend-item"><span class="legend-swatch legend-key" aria-hidden="true"></span>random key</span>
+          <span class="legend-item"><span class="legend-swatch legend-out" aria-hidden="true"></span>message XOR key</span>
+          <span class="legend-item legend-item-back"><span class="legend-swatch legend-back" aria-hidden="true"></span>XOR key again</span>
+        </p>
+        <div class="bit-blocks"></div>
+      </div>
+      <div class="widget-panel xor-panel">
+        <p class="readout" aria-live="polite"></p>
+        <div class="action-row">
+          <button type="button" class="button-primary" data-action="new-key">New random key</button>
+          <button type="button" data-action="unscramble" aria-pressed="false">Unscramble</button>
+        </div>
+      </div>
+    </figure>
+
+    <section class="prose" aria-labelledby="bits-heading">
+      <h2 id="bits-heading">Everything is bits</h2>
+      <p>A computer stores each letter as a <button type="button" class="term" aria-controls="note-byte" aria-expanded="false">byte</button>: eight bits, each a 0 or a 1. Capital S is 01010011.</p>
+      <aside class="term-note" id="note-byte" hidden>
+        <p>A bit is a single 0 or 1. A byte is 8 bits, enough for 256 different values. In the common ASCII code, capital S is number 83, which is 01010011 in binary.</p>
+        <p><a href="https://en.wikipedia.org/wiki/ASCII" target="_blank" rel="noopener">ASCII on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>To scramble, line a random key up under the message and apply <button type="button" class="term" aria-controls="note-xor" aria-expanded="false">XOR</button> to each column. The answer is 1 when the two bits differ and 0 when they match. Do it again with the same key and the message comes back.</p>
+      <aside class="term-note" id="note-xor" hidden>
+        <p>XOR means "exclusive or": one or the other, but not both. 0 XOR 0 = 0, 0 XOR 1 = 1, 1 XOR 0 = 1, and 1 XOR 1 = 0. It is addition on a clock with 2 hours.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Exclusive_or" target="_blank" rel="noopener">Exclusive or on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+    </section>
+
+    <section class="prose" aria-labelledby="pad-heading">
+      <h2 id="pad-heading">Perfect, but impractical</h2>
+      <p>If the key is truly random, as long as the message, and never reused, the scramble reveals nothing at all. Claude Shannon proved it in 1949. This is the <button type="button" class="term" aria-controls="note-pad" aria-expanded="false">one-time pad</button>.</p>
+      <aside class="term-note" id="note-pad" hidden>
+        <p>Spies once carried pads of random digits on paper and destroyed each page after one use, hence the name. Use a page twice and an eavesdropper can XOR the two messages together, which cancels the key out.</p>
+        <p><a href="https://en.wikipedia.org/wiki/One-time_pad" target="_blank" rel="noopener">One-time pad on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>The catch: every secret byte needs its own byte of key, handed over in secret beforehand. To send a gigabyte, you first have to share a gigabyte.</p>
+    </section>
+
+    <section class="prose" aria-labelledby="rounds-heading">
+      <h2 id="rounds-heading">Stretching a short key</h2>
+      <p>Modern ciphers stretch a short key instead. The standard is <button type="button" class="term" aria-controls="note-aes" aria-expanded="false">AES</button>. It cuts the message into blocks of 128 bits and puts each block through rounds of mixing: 10 rounds with a 128-bit key. Each round swaps chunks using a fixed table, moves bits around, and stirs in part of the key.</p>
+      <aside class="term-note" id="note-aes" hidden>
+        <p>The Advanced Encryption Standard, designed by Belgian cryptographers Joan Daemen and Vincent Rijmen and adopted by the US standards agency NIST in 2001. Keys of 128, 192, or 256 bits get 10, 12, or 14 rounds. Many secure web connections use it.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard" target="_blank" rel="noopener">AES on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>The goal: change one input bit and about half the output bits flip, with no pattern to follow.</p>
+    </section>
+
+    <figure class="widget widget-stack" id="mix-widget">
+      <p class="toy-label">A toy cipher made up for this page: 36 bits instead of 128, and not secure. Each round copies the AES recipe: stir in key, swap chunks, move bits.</p>
+      <div class="mix-layout">
+        <div class="mix-grid-block">
+          <span class="group-label">Input: tap a square to flip it</span>
+          <div class="mix-input-grid" role="group" aria-label="Input bits"></div>
+        </div>
+        <div class="mix-grid-block">
+          <span class="group-label mix-output-label"></span>
+          <div class="mix-output-grid" role="img"></div>
+        </div>
+        <div class="mix-side">
+          <p class="readout" aria-live="polite"></p>
+          <div class="widget-controls"></div>
+        </div>
+      </div>
+      <figcaption>
+        <span class="group-label">Bits changed after each round</span>
+        <ol class="mix-round-bars"></ol>
+      </figcaption>
+    </figure>
+
+    <section class="prose" aria-labelledby="hash-heading">
+      <h2 id="hash-heading">A one-way fingerprint</h2>
+      <p>Mix hard enough with no key at all, and keep a short result. That is a <button type="button" class="term" aria-controls="note-hash" aria-expanded="false">hash</button>: a fingerprint of the text. The same text always gives the same fingerprint. Change one letter and it looks brand new. And nobody knows how to run it backward.</p>
+      <aside class="term-note" id="note-hash" hidden>
+        <p>A hash function turns input of any length into a fixed-size output. SHA-256, published by NIST in 2001, gives 256 bits, written here as 64 hexadecimal digits (0 to 9, then A to F, each worth 4 bits).</p>
+        <p><a href="https://en.wikipedia.org/wiki/SHA-2" target="_blank" rel="noopener">SHA-2 on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>This one is real. Your browser computes SHA-256 below.</p>
+    </section>
+
+    <figure class="widget widget-stack" id="hash-widget">
+      <div class="text-field">
+        <label for="hash-text">Your text</label>
+        <div class="hash-input-row">
+          <input id="hash-text" class="hash-input text-input" type="text" autocomplete="off" spellcheck="false">
+          <button type="button" data-action="nudge">Change one letter</button>
+        </div>
+      </div>
+      <div class="hash-result">
+        <p class="hash-output" role="img" aria-label="SHA-256 fingerprint"></p>
+        <p class="readout" aria-live="polite"></p>
+      </div>
+    </figure>
+
+    <section class="prose closing">
+      <p>Every cipher here still needs both sides to share a key first. <a href="clock-math.html">Chapter 3</a> and <a href="shared-secret.html">chapter 4</a> build the fix.</p>
+      <p class="bridge">Could two strangers agree on a secret key while everyone listens?</p>
+    </section>
+  </main>
+
+  <script src="../scripts/core.js"></script>
+  <script src="../scripts/glossary.js"></script>
+  <script src="../scripts/scrambling-helpers.js"></script>
+  <script src="../scripts/widget-scrambling-xor.js"></script>
+  <script src="../scripts/widget-scrambling-mix.js"></script>
+  <script src="../scripts/widget-scrambling-hash.js"></script>
+</body>
+</html>

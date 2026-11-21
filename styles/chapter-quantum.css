@@ -1,0 +1,110 @@
+/*
+ * Chapter 8 (quantum) styles: the powers bar chart, the factor walk, the waves-as-arrows
+ * cartoon, and the Grover card. Loaded after shared.css; colors come only from its tokens.
+ */
+
+/* A widget whose picture is wide: picture on top, controls and readout beneath it. */
+.widget-wide { grid-template-columns: minmax(0, 1fr); }
+
+@media (min-width: 760px) {
+  .widget.widget-wide { grid-template-columns: minmax(0, 1fr); }
+  .widget-wide .widget-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-4) var(--space-6);
+  }
+}
+
+/* ---------- powers bar chart ---------- */
+
+.bar-chart { display: block; width: 100%; height: auto; aspect-ratio: 600 / 250; }
+.bar { fill: var(--ink-soft); }
+.bar-unpaired { opacity: 0.35; }
+.bar-match { fill: var(--accent); }
+.bar-ghost { fill: none; stroke: var(--ink); stroke-width: 2; stroke-dasharray: 4 3; }
+.bar-axis { stroke: var(--rule); stroke-width: 2; }
+.bar-axis-label { font-family: var(--font-ui); font-size: 22px; fill: var(--ink-soft); }
+
+.chart-legend {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+
+.legend-swatch {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  margin: 0 0.3em 0 0;
+  vertical-align: -0.1em;
+  border-radius: 2px;
+}
+.legend-swatch-match { background: var(--accent); }
+.legend-swatch-ghost { border: 2px dashed var(--ink); }
+.legend-gap { display: inline-block; width: var(--space-4); }
+
+/* ---------- factor walk ---------- */
+
+.factor-steps {
+  margin: 0;
+  padding-left: 1.3rem;
+  font-size: 0.94rem;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.factor-steps li + li { margin-top: var(--space-2); }
+.factor-steps b { color: var(--accent); }
+
+.readout-unlucky { font-size: var(--t-lg); font-weight: 600; color: var(--ink); }
+
+.preset-row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.preset-row button {
+  min-height: var(--touch);
+  padding: 0 var(--space-4);
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+/* ---------- waves as arrows ---------- */
+
+.pulse-strip { grid-column: 1 / -1; display: block; width: 100%; height: auto; aspect-ratio: 600 / 92; }
+.arrow-plot { display: block; width: 100%; max-width: min(23rem, 290px); height: auto; aspect-ratio: 1; margin: 0 auto; }
+.pulse-axis { stroke: var(--rule); stroke-width: 2; }
+.pulse { stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
+.wave-arrow-small { stroke: var(--ink-soft); stroke-width: 3.5; }
+.wave-arrow { stroke: var(--ink-soft); stroke-width: 2.5; }
+.wave-total { stroke: var(--accent); stroke-width: 6; opacity: 0.85; }
+.wave-arrowhead { fill: var(--accent); }
+.wave-arrowhead-soft { fill: var(--ink-soft); }
+.wave-start { fill: var(--ink); }
+
+.widget-caption {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+}
+
+/* ---------- card ---------- */
+
+.fact-card {
+  max-width: 36rem;
+  margin: var(--space-8) 0 0;
+  padding: var(--space-4) var(--space-4) var(--space-2);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.fact-card h2 { font-size: var(--t-md); }
+.fact-card p { margin: 0 0 var(--space-3); }
+
+.widget-settings, .readout-column { display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The big picture | Trapdoor</title>
+  <meta name="description" content="Comparing the families of public-key cryptography side by side: key and signature sizes, the hard problem behind each, and what a large quantum computer would do to it.">
+  <meta name="theme-color" content="#f4f3ee">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
+  <link rel="stylesheet" href="../styles/shared.css">
+  <link rel="stylesheet" href="../styles/chapter-big-picture.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-name" href="../index.html">Trapdoor</a>
+    <span class="chapter-number">Chapter 11</span>
+  </header>
+
+  <main class="chapter">
+    <h1>The big picture</h1>
+
+    <figure class="widget widget-hero widget-sizes" id="size-chart-widget">
+      <div class="widget-panel">
+        <div class="sizes-top">
+          <p class="readout" aria-live="polite"></p>
+          <div class="operation-toggle" role="group" aria-label="Scale">
+            <button type="button" data-scale="linear" aria-pressed="true">To scale</button>
+            <button type="button" data-scale="log" aria-pressed="false">Log scale</button>
+          </div>
+        </div>
+        <div class="size-chart" role="group" aria-label="Key and signature or ciphertext sizes in bytes. Tap a row for its numbers."></div>
+        <p class="size-axis-note"></p>
+      </div>
+      <figcaption class="size-caption">Blue: public key. Gray: signature (sig) or ciphertext (ct). Tap a row.</figcaption>
+    </figure>
+
+    <section class="prose" aria-labelledby="table-heading">
+      <h2 id="table-heading">Side by side</h2>
+      <p>Every family rests on a different hard problem. Two of them fall to a large quantum computer running <button type="button" class="term" aria-controls="note-shor" aria-expanded="false">Shor's algorithm</button>.</p>
+      <aside class="term-note" id="note-shor" hidden>
+        <p>Peter Shor showed in 1994 that a quantum computer could find the hidden repeating pattern inside factoring and curve problems, and so solve them quickly. No machine big enough to run it on real key sizes exists yet.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Shor%27s_algorithm" target="_blank" rel="noopener">Shor's algorithm on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+    </section>
+
+    <div class="table-scroll" role="region" aria-labelledby="table-heading" tabindex="0">
+      <table class="family-table">
+        <thead>
+          <tr>
+            <th scope="col">Family</th>
+            <th scope="col">Hard problem</th>
+            <th scope="col" class="numeric">Since</th>
+            <th scope="col" class="numeric">Key<br>(bytes)</th>
+            <th scope="col" class="numeric">Sig or ct<br>(bytes)</th>
+            <th scope="col">Big quantum<br>computer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row"><a href="two-keys.html">Factoring</a></th><td>Split a product of two primes</td><td class="numeric">1977</td><td class="numeric">256</td><td class="numeric">256</td><td class="verdict-broken">Breaks it</td></tr>
+          <tr><th scope="row"><a href="hash-signatures.html">Codes</a></th><td>Fix planted errors in a hidden code</td><td class="numeric">1978</td><td class="numeric">261,120</td><td class="numeric">96</td><td>No known attack</td></tr>
+          <tr><th scope="row"><a href="hash-signatures.html">Hashes</a></th><td>Reverse a fingerprint</td><td class="numeric">1979</td><td class="numeric">32</td><td class="numeric">7,856</td><td>Small speed-up</td></tr>
+          <tr><th scope="row"><a href="curves.html">Elliptic curves</a></th><td>Undo hops on a curve</td><td class="numeric">1985</td><td class="numeric">32</td><td class="numeric">64</td><td class="verdict-broken">Breaks it</td></tr>
+          <tr><th scope="row"><a href="lattices.html">Lattices</a></th><td>Nearest dot in a skewed grid</td><td class="numeric">1996</td><td class="numeric">1,184</td><td class="numeric">1,088</td><td>No known attack</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Sizes: RSA-2048, mceliece348864, SLH-DSA-SHA2-128s, Ed25519, ML-KEM-768.</p>
+
+    <section class="card" aria-labelledby="sike-heading">
+      <h2 id="sike-heading">A cautionary tale</h2>
+      <p>SIKE rested on a newer problem: finding a path between two elliptic curves, called an <button type="button" class="term" aria-controls="note-isogeny" aria-expanded="false">isogeny</button>. In July 2022 NIST kept it for a fourth round of review. Weeks later, Wouter Castryck and Thomas Decru broke it on an ordinary computer, recovering a key for the smallest setting in about an hour on one processor core. No quantum computer needed.</p>
+      <aside class="term-note" id="note-isogeny" hidden>
+        <p>An isogeny is a map from one elliptic curve to another that respects the curves' addition rule. SIKE hid a secret in a long chain of such maps. The 2022 attack used extra public information SIKE handed out to rebuild the chain.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Supersingular_isogeny_key_exchange" target="_blank" rel="noopener">Supersingular isogeny key exchange on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>New math needs years of clever people attacking it before anyone should trust it.</p>
+    </section>
+
+    <section class="card" aria-labelledby="hybrid-heading">
+      <h2 id="hybrid-heading">Belt and braces</h2>
+      <p>So the web hedges. A browser can do the <a href="shared-secret.html">key agreement</a> twice, once with X25519 and once with ML-KEM-768, and mix the two results. This hybrid, X25519MLKEM768, stays safe as long as either half holds.</p>
+      <p>Recent Chrome, Edge and Firefox offer it by default, as do Apple's 2025 systems. It is used only when the website's server supports it too.</p>
+    </section>
+
+    <section class="prose closing">
+      <p>Structure is what makes a one-way street possible: a clock that wraps, a curve, a grid. It is also what a clever solver grabs onto. Every trapdoor here is a bet that nobody has found the handle.</p>
+      <p class="bridge">Which of today's one-way streets would you bet on for the next fifty years, and why?</p>
+    </section>
+  </main>
+
+  <script src="../scripts/core.js"></script>
+  <script src="../scripts/glossary.js"></script>
+  <script src="../scripts/widget-big-picture-sizes.js"></script>
+</body>
+</html>

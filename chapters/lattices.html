@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lost in the grid | Trapdoor</title>
+  <meta name="description" content="A hands-on lesson on lattices: two pairs of arrows build the same grid of dots, and finding the nearest dot with the wrong pair is a problem nobody knows how to solve quickly.">
+  <meta name="theme-color" content="#f4f3ee">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
+  <link rel="stylesheet" href="../styles/shared.css">
+  <link rel="stylesheet" href="../styles/chapter-lattices.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-name" href="../index.html">Trapdoor</a>
+    <span class="chapter-number">Chapter 9</span>
+  </header>
+
+  <main class="chapter">
+    <h1>Lost in the grid</h1>
+
+    <figure class="widget widget-hero" id="lattice-grid-widget">
+      <svg class="lattice-svg" role="img" aria-label="A grid of dots with two arrows"></svg>
+      <div class="widget-panel">
+        <div class="operation-toggle" role="group" aria-label="Arrow pair">
+          <button type="button" data-basis="tidy" aria-pressed="true">Tidy arrows</button>
+          <button type="button" data-basis="skewed" aria-pressed="false">Skewed arrows</button>
+        </div>
+        <p class="readout" aria-live="polite"></p>
+        <div class="widget-controls"></div>
+      </div>
+    </figure>
+
+    <section class="prose" aria-labelledby="same-heading">
+      <h2 id="same-heading">Same dots, different arrows</h2>
+      <p>Take whole numbers of steps along arrow A and arrow B, and you land on a dot. All the dots you can reach form a <button type="button" class="term" aria-controls="note-lattice" aria-expanded="false">lattice</button>.</p>
+      <aside class="term-note" id="note-lattice" hidden>
+        <p>A lattice is a grid of points that repeats perfectly in every direction. Pick some arrows; the lattice is every point you reach by adding whole numbers of copies of them, backward steps included. Many different sets of arrows can build the same lattice.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Lattice_(group)" target="_blank" rel="noopener">Lattice on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>The tidy pair and the skewed pair build exactly the same dots. Only the recipes change.</p>
+    </section>
+
+    <section class="prose" aria-labelledby="nearest-heading">
+      <h2 id="nearest-heading">Find the nearest dot</h2>
+      <p>Now the dots are hidden. You get the arrows and a red point. Land on the dot closest to it. Try the tidy pair first, then the skewed one.</p>
+    </section>
+
+    <figure class="widget" id="lattice-nearest-widget">
+      <svg class="lattice-svg" role="img" aria-label="Two arrows and a red target point"></svg>
+      <div class="widget-panel">
+        <div class="operation-toggle" role="group" aria-label="Arrow pair">
+          <button type="button" data-basis="tidy" aria-pressed="true">Tidy arrows</button>
+          <button type="button" data-basis="skewed" aria-pressed="false">Skewed arrows</button>
+        </div>
+        <p class="readout" aria-live="polite"></p>
+        <div class="widget-controls"></div>
+        <p class="tries">Moves: <span class="moves-count">0</span></p>
+        <div class="action-row">
+          <button type="button" class="button-primary" data-action="check">Is this the nearest?</button>
+          <button type="button" data-action="round">Round the recipe</button>
+          <button type="button" data-action="dots">Show the dots</button>
+          <button type="button" data-action="new">New point</button>
+        </div>
+      </div>
+    </figure>
+
+    <section class="prose" aria-labelledby="dimensions-heading">
+      <h2 id="dimensions-heading">Hundreds of directions</h2>
+      <p>With short, nearly square arrows, a shortcut works: write the red point as a recipe and round each number. With long, skewed arrows, rounding lands far off, and every step leaps across the page.</p>
+      <p>On paper you can just look. A real lattice has hundreds of <button type="button" class="term" aria-controls="note-dimension" aria-expanded="false">dimensions</button>, and there is nothing to look at. Given only skewed arrows, nobody knows how to find the nearest dot quickly. As far as anyone knows, that includes a quantum computer: the hidden repeating pattern from <a href="quantum.html">chapter 8</a> does not seem to be there.</p>
+      <aside class="term-note" id="note-dimension" hidden>
+        <p>Each dimension is one more independent direction. A page has two, a room has three. Math happily allows 500: a point is then a list of 500 numbers, and an arrow moves all of them at once.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Dimension" target="_blank" rel="noopener">Dimension on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>The earliest lattice designs used exactly this trapdoor. The tidy arrows were the private key; the skewed arrows were the public key.</p>
+    </section>
+
+    <section class="card" aria-labelledby="errors-heading">
+      <h2 id="errors-heading">Small errors</h2>
+      <p>In 2005 Oded Regev found a sturdier way to hide a secret. Write <a href="clock-math.html">clock equations</a> in some secret numbers, then nudge every answer by a tiny random amount. This is <button type="button" class="term" aria-controls="note-lwe" aria-expanded="false">learning with errors</button>.</p>
+      <aside class="term-note" id="note-lwe" hidden>
+        <p>Learning with errors asks you to recover secret numbers from many clock equations whose answers are each slightly wrong. Regev proved that solving it is at least as hard as certain worst-case lattice problems. Nearly all lattice cryptography in use today builds on it.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Learning_with_errors" target="_blank" rel="noopener">Learning with errors on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>Without the nudge, school elimination solves the equations at once. With it, the errors grow as you eliminate.</p>
+      <figure class="widget widget-noise" id="lattice-noise-widget">
+        <div class="widget-panel">
+          <div class="operation-toggle" role="group" aria-label="Noise">
+            <button type="button" data-noise="off" aria-pressed="false">No noise</button>
+            <button type="button" data-noise="on" aria-pressed="true">Noise</button>
+          </div>
+          <ol class="equation-list" aria-label="Equations on a 13-hour clock"></ol>
+          <p class="readout" aria-live="polite"></p>
+          <div class="widget-controls"></div>
+          <div class="action-row">
+            <button type="button" class="button-primary" data-action="eliminate">Solve by elimination</button>
+            <button type="button" data-action="new">New secret</button>
+          </div>
+        </div>
+      </figure>
+    </section>
+
+    <section class="card" aria-labelledby="standard-heading">
+      <h2 id="standard-heading">Now the standard</h2>
+      <p>In August 2024 NIST, the US standards body, published two lattice standards built on learning with errors: ML-KEM for agreeing on a key and ML-DSA for signatures. The price is size, kilobytes where <a href="curves.html">curves</a> need dozens of bytes.</p>
+      <div class="table-scroll" role="region" aria-label="Key sizes" tabindex="0">
+        <table class="size-table">
+          <thead>
+            <tr><th scope="col">Scheme</th><th scope="col" class="numeric">Public key (bytes)</th><th scope="col" class="numeric">Ciphertext or signature (bytes)</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">X25519 (curve)</th><td class="numeric">32</td><td class="numeric">32</td></tr>
+            <tr><th scope="row">ML-KEM-768</th><td class="numeric">1,184</td><td class="numeric">1,088</td></tr>
+            <tr><th scope="row">Ed25519 (curve)</th><td class="numeric">32</td><td class="numeric">64</td></tr>
+            <tr><th scope="row">ML-DSA-65</th><td class="numeric">1,952</td><td class="numeric">3,309</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="prose closing">
+      <p>Lattices have been a foundation for cryptography for only about thirty years.</p>
+      <p class="bridge">Is there something even more conservative to build on, using nothing but the fingerprints from <a href="scrambling.html">chapter 2</a>?</p>
+    </section>
+  </main>
+
+  <script src="../scripts/core.js"></script>
+  <script src="../scripts/glossary.js"></script>
+  <script src="../scripts/lattices-helpers.js"></script>
+  <script src="../scripts/widget-lattices-grid.js"></script>
+  <script src="../scripts/widget-lattices-nearest.js"></script>
+  <script src="../scripts/widget-lattices-noise.js"></script>
+</body>
+</html>

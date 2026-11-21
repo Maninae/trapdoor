@@ -1,0 +1,170 @@
+/*
+ * Chapter 5 (two keys) styles, layered on shared.css.
+ *
+ * - Same people, same hues as chapter 4: Alice teal, Bob violet, Eve soft ink. Public keys
+ *   carry no person hue; Bob's private key and the locked padlock wear his violet.
+ * - The challenge number keeps the site's red (--accent-2), as in chapter 3's puzzle.
+ */
+
+:root {
+  --person-alice: #0f6e66;
+  --person-bob: #74389a;
+  --person-eve: var(--ink-soft);
+  --person-bob-soft: #efe6f4;
+}
+
+.name-alice { color: var(--person-alice); font-weight: 700; }
+.name-bob { color: var(--person-bob); font-weight: 700; }
+.name-eve { color: var(--person-eve); font-weight: 700; }
+
+@media (min-width: 760px) {
+  .widget.widget-stack { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---------- factoring race ---------- */
+
+#factor-widget .readout-big { font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+#factor-widget .readout-long { font-size: var(--t-xl); line-height: 1.15; }
+#factor-widget .readout-split { color: var(--accent); }
+#factor-widget .readout-factors { font-size: var(--t-xl); font-weight: 600; line-height: 1.15; color: var(--accent); overflow-wrap: anywhere; }
+
+/* Eight size buttons: one row on a laptop, a tidy 4 x 2 grid on a phone. */
+@media (max-width: 759px) {
+  .digit-buttons { display: grid; grid-template-columns: repeat(4, minmax(var(--touch), 1fr)); }
+}
+#factor-widget .guess-row input { width: 12rem; max-width: 100%; text-align: left; padding: 0 var(--space-3); }
+
+.try-list li { white-space: normal; overflow-wrap: anywhere; }
+
+.search-meter {
+  height: 14px;
+  border-radius: 7px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  overflow: hidden;
+}
+
+.search-meter[hidden] { display: none; }
+
+.search-meter-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+}
+
+.search-status:empty { display: none; }
+
+.search-status {
+  margin: calc(-1 * var(--space-2)) 0 0;
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- padlock ---------- */
+
+.padlock {
+  display: block;
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto;
+  height: auto;
+  aspect-ratio: 200 / 230;
+}
+
+@media (min-width: 760px) {
+  .padlock { max-width: 17rem; }
+}
+
+.padlock-shackle {
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 14;
+  stroke-linecap: round;
+  transform: translateY(-30px);
+  transition: transform 280ms ease-in-out;
+}
+
+.padlock-body {
+  fill: var(--surface);
+  stroke: var(--ink);
+  stroke-width: 4;
+  transition: fill 280ms ease-in-out, stroke 280ms ease-in-out;
+}
+
+.padlock-value {
+  fill: var(--accent);
+  font-family: var(--font-body);
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.padlock-keyhole { fill: var(--ink-soft); }
+
+.padlock.is-locked .padlock-shackle { transform: none; stroke: var(--person-bob); }
+.padlock.is-locked .padlock-body { fill: var(--person-bob-soft); stroke: var(--person-bob); }
+.padlock.is-locked .padlock-value { fill: var(--person-bob); }
+
+/* ---------- keys and steps ---------- */
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 3px 6px;
+  border-radius: 4px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+  vertical-align: 0.1em;
+}
+
+.tag-public { color: var(--ink-soft); background: var(--bg); }
+.tag-bob { color: var(--person-bob); background: var(--person-bob-soft); }
+
+.key-cards { display: flex; flex-direction: column; gap: var(--space-1); }
+
+.key-card {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  font-family: var(--font-ui);
+  font-variant-numeric: tabular-nums;
+}
+
+.rsa-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.rsa-steps li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-left: 4px solid var(--rule);
+  background: var(--surface);
+  border-radius: 0 6px 6px 0;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.rsa-steps li > span { min-width: 0; }
+.rsa-steps li.step-alice { border-left-color: var(--person-alice); }
+.rsa-steps li.step-bob { border-left-color: var(--person-bob); }
+.rsa-steps .step-who { font-family: var(--font-ui); font-size: var(--t-sm); min-width: 5.5rem; }
+.rsa-steps .step-shared { color: var(--accent); }
+
+#rsa-widget .readout-locked { color: var(--person-bob); }
+
+.nowrap { white-space: nowrap; }

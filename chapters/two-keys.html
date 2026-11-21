@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Two keys | Trapdoor</title>
+  <meta name="description" content="A hands-on lesson on RSA: multiplying primes is quick, splitting the product is slow, and that gap gives you a lock anyone can close but only you can open.">
+  <meta name="theme-color" content="#f4f3ee">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
+  <link rel="stylesheet" href="../styles/shared.css">
+  <link rel="stylesheet" href="../styles/chapter-two-keys.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-name" href="../index.html">Trapdoor</a>
+    <span class="chapter-number">Chapter 5</span>
+  </header>
+
+  <main class="chapter">
+    <h1>Two keys</h1>
+
+    <figure class="widget widget-stack" id="factor-widget">
+      <div class="widget-panel">
+        <div class="prime-picker" role="group" aria-label="How many digits">
+          <span class="group-label">Digits in the product</span>
+          <div class="prime-buttons digit-buttons">
+            <button type="button" data-digits="4" aria-pressed="true">4</button>
+            <button type="button" data-digits="8" aria-pressed="false">8</button>
+            <button type="button" data-digits="12" aria-pressed="false">12</button>
+            <button type="button" data-digits="16" aria-pressed="false">16</button>
+            <button type="button" data-digits="18" aria-pressed="false">18</button>
+            <button type="button" data-digits="20" aria-pressed="false">20</button>
+            <button type="button" data-digits="22" aria-pressed="false">22</button>
+            <button type="button" data-digits="24" aria-pressed="false">24</button>
+          </div>
+        </div>
+        <p class="readout" aria-live="polite"></p>
+        <form class="guess-form">
+          <label for="divide-by">Divide it by</label>
+          <div class="guess-row">
+            <input id="divide-by" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 7">
+            <button type="submit" class="button-primary">Try it</button>
+          </div>
+        </form>
+        <p class="tries">Your tries: <span class="tries-count">0</span></p>
+        <ol class="try-list" aria-label="Your tries"></ol>
+        <div class="search-meter" aria-hidden="true"><div class="search-meter-fill"></div></div>
+        <p class="search-status" aria-live="polite"></p>
+        <div class="action-row">
+          <button type="button" data-action="computer">Let the computer try dividing</button>
+          <button type="button" data-action="new">New number</button>
+        </div>
+      </div>
+    </figure>
+
+    <section class="prose" aria-labelledby="split-heading">
+      <h2 id="split-heading">Easy to multiply, slow to split</h2>
+      <p>Multiplying two <button type="button" class="term" aria-controls="note-prime-factors" aria-expanded="false">primes</button> takes a computer a blink. Going back, from the product to the two primes, has no known shortcut anywhere near as quick.</p>
+      <aside class="term-note" id="note-prime-factors" hidden>
+        <p>A prime has no divisors except 1 and itself. Every whole number above 1 splits into primes in exactly one way, like 3233 = 53 &times; 61. Finding that split is called factoring.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Integer_factorization" target="_blank" rel="noopener">Integer factorization on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>The plain method divides by 2, 3, 5, 7, and onward until one goes in evenly. Two more digits in the product make that search about ten times longer.</p>
+    </section>
+
+    <section class="prose" aria-labelledby="lock-heading">
+      <h2 id="lock-heading">A lock anyone can close</h2>
+      <p>Bob picks two primes, 61 and 53, and publishes their product, 3233, with the number 17. That pair is his public key: an open padlock anyone can snap shut. To lock a number, raise it to the 17th power on a 3233-hour <a href="clock-math.html">clock</a>.</p>
+      <p>Bob keeps a second number, 2753, as his <button type="button" class="term" aria-controls="note-private-key" aria-expanded="false">private key</button>. Raising the locked number to the 2753rd power on the same clock brings back the original.</p>
+      <aside class="term-note" id="note-private-key" hidden>
+        <p>Bob finds 2753 from his primes. He multiplies 61 &minus; 1 by 53 &minus; 1 to get 3120, then looks for a number that times 17 lands on 1 on a 3120-hour clock: <span class="nowrap">17&nbsp;&times;&nbsp;2753 = 46,801</span> <span class="nowrap">= 15&nbsp;&times;&nbsp;3120&nbsp;+&nbsp;1</span>. Without 61 and 53, nobody can get 3120.</p>
+        <p><a href="https://en.wikipedia.org/wiki/RSA_cryptosystem#Example" target="_blank" rel="noopener">RSA worked example on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+    </section>
+
+    <figure class="widget" id="rsa-widget">
+      <svg class="padlock" role="img" aria-label="An open padlock"></svg>
+      <div class="widget-panel">
+        <div class="key-cards">
+          <p class="key-card key-public"><span class="tag tag-public">public key</span> <span>clock 3,233, lock power 17</span></p>
+          <p class="key-card key-private"><span class="tag tag-bob">Bob's private key</span> <span>unlock power 2,753</span></p>
+        </div>
+        <div class="widget-controls"></div>
+        <ol class="rsa-steps" aria-live="polite"></ol>
+        <p class="readout" aria-live="polite"></p>
+        <div class="action-row">
+          <button type="button" class="button-primary" data-action="lock">Lock with the public key</button>
+          <button type="button" data-action="open">Open with the private key</button>
+          <button type="button" data-action="reset">Start over</button>
+        </div>
+      </div>
+    </figure>
+
+    <section class="prose" aria-labelledby="size-heading">
+      <h2 id="size-heading">Why Eve is stuck</h2>
+      <p>Anyone who splits 3233 can rebuild 2753. Here that takes a few tries. A real public key is a <button type="button" class="term" aria-controls="note-key-size" aria-expanded="false">2048-bit</button> number, about 617 digits long, and nobody knows how to split one in any reasonable time.</p>
+      <aside class="term-note" id="note-key-size" hidden>
+        <p>Bits count binary digits, so a 2048-bit number is about 2<sup>2048</sup>, which has 617 ordinary digits. In 2020, splitting a 250-digit challenge number called RSA-250 took about 2,700 years of computer-core time.</p>
+        <p><a href="https://en.wikipedia.org/wiki/RSA_numbers" target="_blank" rel="noopener">RSA numbers on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>Ron Rivest, Adi Shamir, and Leonard Adleman published this system, RSA, in 1977. Clifford Cocks had found it at GCHQ, the British spy agency, in 1973, but that stayed secret until 1997.</p>
+    </section>
+
+    <section class="prose closing">
+      <p class="bridge">If anyone can lock a message to you, how do you know who sent it?</p>
+    </section>
+  </main>
+
+  <script src="../scripts/core.js"></script>
+  <script src="../scripts/glossary.js"></script>
+  <script src="../scripts/two-keys-helpers.js"></script>
+  <script src="../scripts/widget-two-keys-factor-race.js"></script>
+  <script src="../scripts/widget-two-keys-padlock.js"></script>
+</body>
+</html>

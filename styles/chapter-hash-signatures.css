@@ -1,0 +1,112 @@
+/*
+ * Chapter 10 (hash signatures) styles, layered on shared.css. Colors come only from tokens.
+ *
+ * - Lamport key grid: gray = public fingerprint, blue = revealed secret, red outline = a
+ *   column where both secrets are public (the danger the reader caused).
+ * - .card is repeated from the other late chapters so each page stays standalone.
+ */
+
+/* ---------- Lamport key grid ---------- */
+
+.key-grid {
+  display: grid;
+  grid-template-columns: auto repeat(6, minmax(var(--touch), 1fr));
+  gap: var(--space-1);
+  align-items: stretch;
+  min-width: 0;
+}
+
+.key-row-label {
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+  align-self: center;
+  padding-right: var(--space-1);
+  white-space: nowrap;
+}
+
+.bit-toggle {
+  min-height: var(--touch);
+  min-width: var(--touch);
+  font-family: var(--font-body);
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  font-variant-numeric: tabular-nums;
+}
+
+.key-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-height: 4.6rem;
+  padding: var(--space-1) 0;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--bg);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+
+.key-fingerprint { color: var(--ink-soft); }
+.key-secret { color: var(--accent); font-weight: 700; min-height: 1.3em; }
+.key-check { font-family: var(--font-ui); font-weight: 700; min-height: 1.3em; }
+.check-ok { color: var(--ok); }
+.check-bad { color: var(--accent-2); }
+
+.key-cell.is-chosen { border: 2px solid var(--ink); background: var(--surface); }
+.key-cell.is-revealed { background: var(--surface); }
+.key-cell.is-leaked { border-color: var(--accent-2); box-shadow: inset 0 0 0 1px var(--accent-2); }
+
+.key-caption { color: var(--ink-soft); font-size: 0.94rem; }
+
+@media (max-width: 759px) {
+  #lamport-widget { padding: var(--space-3); }
+  .key-grid { gap: 3px; }
+  .key-row-label { padding-right: 0; }
+}
+
+@media (min-width: 760px) {
+  #lamport-widget { grid-template-columns: minmax(0, 25rem) minmax(0, 1fr); }
+  .key-cell { font-size: 0.85rem; }
+}
+
+/* ---------- cards ---------- */
+
+.card {
+  margin: var(--space-12) 0 var(--space-6);
+  padding: var(--space-6) var(--space-4) var(--space-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.card h2 { font-size: var(--t-md); }
+.card > p { max-width: 36rem; margin: 0 0 var(--space-4); }
+
+@media (min-width: 760px) {
+  .card { padding: var(--space-6); }
+}
+
+/* ---------- Merkle tree ---------- */
+
+.widget-merkle { margin-top: var(--space-2); }
+
+@media (min-width: 760px) {
+  .widget-merkle { grid-template-columns: minmax(0, 1fr); }
+}
+
+.merkle-svg { display: block; width: 100%; max-width: 32rem; height: auto; margin: 0 auto; }
+.merkle-edge { stroke: var(--rule); stroke-width: 2; }
+.merkle-edge-path { stroke: var(--accent); stroke-width: 3.5; }
+.merkle-node rect { fill: var(--surface); stroke: var(--rule); stroke-width: 1.5; }
+.merkle-node text { fill: var(--ink-soft); font-family: var(--font-ui); font-size: 17px; font-weight: 700; }
+.merkle-node-path rect { fill: var(--accent); stroke: var(--accent); }
+.merkle-node-path text { fill: var(--on-accent); }
+.merkle-node-sibling rect { fill: var(--accent-soft); stroke: var(--accent); }
+.merkle-node-sibling text { fill: var(--ink); }

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hopping on a curve | Trapdoor</title>
+  <meta name="description" content="A hands-on lesson in elliptic curves: a rule for adding points, hops that scatter across a grid of whole numbers, and why counting the hops backward is hard.">
+  <meta name="theme-color" content="#f4f3ee">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
+  <link rel="stylesheet" href="../styles/shared.css">
+  <link rel="stylesheet" href="../styles/chapter-curves.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-name" href="../index.html">Trapdoor</a>
+    <span class="chapter-number">Chapter 7</span>
+  </header>
+
+  <main class="chapter">
+    <h1>Hopping on a curve</h1>
+
+    <figure class="widget widget-hero" id="curve-add-widget">
+      <svg class="curve-plot" role="img" aria-label="The curve y squared equals x cubed minus x plus 1"></svg>
+      <div class="widget-panel">
+        <p class="widget-hint">Drag P and Q along the curve, or tap the curve.</p>
+        <p class="readout" aria-live="polite"></p>
+        <ol class="construction-steps"></ol>
+      </div>
+    </figure>
+
+    <section class="prose" aria-labelledby="add-heading">
+      <h2 id="add-heading">A strange way to add</h2>
+      <p>The curve is every point where <i>y</i><sup>2</sup> = <i>x</i><sup>3</sup> &minus; <i>x</i> + 1. Pick two points on it. The line through them crosses the curve once more. Flip that crossing over the <i>x</i>-axis, and you have P + Q.</p>
+      <p>A vertical line never crosses a third time. Its answer is an extra point called <button type="button" class="term" aria-controls="note-zero" aria-expanded="false">zero</button>.</p>
+      <aside class="term-note" id="note-zero" hidden>
+        <p>Mathematicians add one point that sits "at infinity", where every vertical line meets. It acts like 0 in ordinary adding: P + zero = P. A point plus its mirror image across the <i>x</i>-axis gives zero.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Point_at_infinity" target="_blank" rel="noopener">Point at infinity on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>Now add P to itself again and again: 2P = P + P, then 3P = 2P + P. Each hop is one use of the rule.</p>
+    </section>
+
+    <figure class="widget" id="curve-hops-widget">
+      <svg class="curve-plot" role="img" aria-label="The curve with hops"></svg>
+      <div class="widget-panel">
+        <p class="widget-hint">Drag P to pick a start.</p>
+        <p class="readout" aria-live="polite"></p>
+        <div class="action-row">
+          <button type="button" class="button-primary" data-action="next">Next hop</button>
+          <button type="button" data-action="play">Play all hops</button>
+          <button type="button" data-action="reset">Start over</button>
+        </div>
+      </div>
+      <figcaption>
+        <ol class="hop-list" aria-label="Hops so far"></ol>
+      </figcaption>
+    </figure>
+
+    <section class="prose" aria-labelledby="grid-heading">
+      <h2 id="grid-heading">The same curve on a clock</h2>
+      <p>Now keep only whole numbers, and wrap both <i>x</i> and <i>y</i> around a clock, as in <a href="clock-math.html">clock math</a>. The curve turns into a scatter of dots. The adding rule still works, with <button type="button" class="term" aria-controls="note-divide" aria-expanded="false">division on the clock</button>.</p>
+      <aside class="term-note" id="note-divide" hidden>
+        <p>The rule needs the slope of a line, which means dividing. On a prime clock, dividing by 2 means multiplying by the number that turns 2 into 1. On a 29-hour clock that is 15, because 2 &times; 15 = 30 lands on 1.</p>
+        <p><a href="https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/modular-inverses" target="_blank" rel="noopener">Modular inverses (Khan Academy)</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+    </section>
+
+    <figure class="widget" id="curve-grid-widget">
+      <svg class="curve-plot" role="img" aria-label="Dots on a grid"></svg>
+      <div class="widget-panel">
+        <div class="prime-picker" role="group" aria-label="Hours on the clock">
+          <span class="group-label">Hours on the clock</span>
+          <div class="prime-buttons">
+            <button type="button" data-prime="13" aria-pressed="false">13</button>
+            <button type="button" data-prime="29" aria-pressed="true">29</button>
+            <button type="button" data-prime="41" aria-pressed="false">41</button>
+          </div>
+        </div>
+        <p class="widget-hint">Tap any dot to start there.</p>
+        <p class="readout" aria-live="polite"></p>
+        <div class="action-row">
+          <button type="button" class="button-primary" data-action="next">Next hop</button>
+          <button type="button" data-action="play">Play all hops</button>
+          <button type="button" data-action="reset">Start over</button>
+        </div>
+      </div>
+      <figcaption>
+        <ol class="hop-list" aria-label="Hops so far"></ol>
+      </figcaption>
+    </figure>
+
+    <section class="prose" aria-labelledby="trapdoor-heading">
+      <h2 id="trapdoor-heading">Easy forward, hard backward</h2>
+      <p>Hopping forward is quick. To reach 1,000,000P you do not hop a million times. Double P to 2P, 4P, 8P, and so on, then add up the ones you need: 25 steps.</p>
+      <p>Backward is the hard part. Shown the start dot and the end dot, how many hops? On a well-chosen curve, nobody knows a fast way.</p>
+    </section>
+
+    <figure class="widget" id="curve-hunt-widget">
+      <svg class="curve-plot" role="img" aria-label="Dots on a 97 by 97 grid"></svg>
+      <div class="widget-panel">
+        <p class="readout" aria-live="polite"></p>
+        <form class="guess-form">
+          <label for="guess-hops">Your guess for the number of hops</label>
+          <div class="guess-row">
+            <input id="guess-hops" type="number" inputmode="numeric" min="1" max="999" step="1" placeholder="e.g. 40">
+            <button type="submit" class="button-primary">Try it</button>
+          </div>
+        </form>
+        <p class="tries">Tries: <span class="tries-count">0</span></p>
+        <div class="action-row">
+          <button type="button" data-action="computer">Let the computer hop 1, 2, 3, &hellip;</button>
+          <button type="button" data-action="new">New puzzle</button>
+        </div>
+      </div>
+      <figcaption>
+        <ol class="try-list" aria-label="Your tries"></ol>
+      </figcaption>
+    </figure>
+
+    <aside class="fact-card" aria-labelledby="size-heading">
+      <h2 id="size-heading">Same strength, smaller keys</h2>
+      <div class="key-size-bars" aria-hidden="true">
+        <div class="key-size-row">
+          <span class="key-size-name">Curve key</span>
+          <div class="key-size-track"><span class="key-size-bar" style="width: 8.33%"></span><span class="key-size-value">256 bits</span></div>
+        </div>
+        <div class="key-size-row">
+          <span class="key-size-name">Two-key system</span>
+          <div class="key-size-track"><span class="key-size-bar key-size-bar-other" style="width: 100%"></span><span class="key-size-value key-size-value-inside">3,072 bits</span></div>
+        </div>
+      </div>
+      <p>US standards body NIST rates a 256-<button type="button" class="term" aria-controls="note-bit" aria-expanded="false">bit</button> curve key about as strong as a 3,072-bit key in the <a href="two-keys.html">two-key system</a>. Smaller keys mean less to send and less to compute, which is why phones and browsers often prefer curves.</p>
+      <aside class="term-note" id="note-bit" hidden>
+        <p>A bit is one binary digit, a 0 or a 1. A 256-bit number has up to 256 binary digits, which is about 78 ordinary digits.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Bit" target="_blank" rel="noopener">Bit on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p class="history-note">Neal Koblitz and Victor Miller each proposed curve cryptography, independently, in 1985.</p>
+    </aside>
+
+    <section class="prose closing">
+      <p>Clock powers and curve hops both have a hidden rhythm: keep going and you come back to the start.</p>
+      <p class="bridge">What if a <a href="quantum.html">new kind of computer</a> could hear that rhythm?</p>
+    </section>
+  </main>
+
+  <script src="../scripts/core.js"></script>
+  <script src="../scripts/glossary.js"></script>
+  <script src="../scripts/curves-helpers.js"></script>
+  <script src="../scripts/curves-grid-helpers.js"></script>
+  <script src="../scripts/widget-curves-add.js"></script>
+  <script src="../scripts/widget-curves-hops.js"></script>
+  <script src="../scripts/widget-curves-grid.js"></script>
+  <script src="../scripts/widget-curves-hunt.js"></script>
+</body>
+</html>

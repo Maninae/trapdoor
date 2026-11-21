@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The rhythm finder | Trapdoor</title>
+  <meta name="description" content="A hands-on lesson on why a large quantum computer would break today's public-key codes: powers on a clock repeat, and the repeat length splits the clock size into factors.">
+  <meta name="theme-color" content="#f4f3ee">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
+  <link rel="stylesheet" href="../styles/shared.css">
+  <link rel="stylesheet" href="../styles/chapter-quantum.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-name" href="../index.html">Trapdoor</a>
+    <span class="chapter-number">Chapter 8</span>
+  </header>
+
+  <main class="chapter">
+    <h1>The rhythm finder</h1>
+
+    <figure class="widget widget-hero widget-wide" id="period-widget">
+      <svg class="bar-chart" role="img" aria-label="Bar chart of powers on a clock"></svg>
+      <div class="widget-panel">
+        <div class="widget-settings">
+          <div class="prime-picker" role="group" aria-label="Hours on the clock">
+            <span class="group-label">Hours on the clock</span>
+            <div class="prime-buttons">
+              <button type="button" data-clock="15" aria-pressed="true">15</button>
+              <button type="button" data-clock="21" aria-pressed="false">21</button>
+              <button type="button" data-clock="33" aria-pressed="false">33</button>
+              <button type="button" data-clock="35" aria-pressed="false">35</button>
+            </div>
+          </div>
+          <div class="widget-controls"></div>
+        </div>
+        <div class="readout-column">
+          <p class="chart-legend"><span class="legend-swatch legend-swatch-ghost"></span>sliding copy<span class="legend-gap"></span><span class="legend-swatch legend-swatch-match"></span>bar that lines up</p>
+          <p class="readout" aria-live="polite"></p>
+        </div>
+      </div>
+    </figure>
+
+    <section class="prose" aria-labelledby="rhythm-heading">
+      <h2 id="rhythm-heading">Every power has a rhythm</h2>
+      <p>Raise a number to higher and higher powers on a clock, as in <a href="clock-math.html">clock math</a>, and the landings repeat. The repeat length is the <button type="button" class="term" aria-controls="note-period" aria-expanded="false">period</button>.</p>
+      <aside class="term-note" id="note-period" hidden>
+        <p>The period is the smallest number of steps after which a pattern starts over. Powers of 7 on a 15-hour clock go 1, 7, 4, 13, 1, 7, 4, 13, &hellip; so the period is 4.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Multiplicative_order" target="_blank" rel="noopener">Multiplicative order on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+    </section>
+
+    <section class="prose" aria-labelledby="split-heading">
+      <h2 id="split-heading">The period splits the clock</h2>
+      <p>Here is the surprise. Powers of 7 on a 15-hour clock have period 4. Half of 4 is 2, and 7<sup>2</sup> = 49 lands on 4. Now 4 &minus; 1 = 3 and 4 + 1 = 5 each share a factor with 15, and a <button type="button" class="term" aria-controls="note-gcd" aria-expanded="false">greatest common divisor</button> pulls it out: 15&nbsp;=&nbsp;3&nbsp;&times;&nbsp;5.</p>
+      <aside class="term-note" id="note-gcd" hidden>
+        <p>The greatest common divisor of two numbers is the biggest number that divides both. Euclid's method finds it fast: divide, keep the remainder, repeat. The last nonzero remainder is the answer.</p>
+        <p><a href="https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm" target="_blank" rel="noopener">The Euclidean algorithm (Khan Academy)</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>Sometimes you are unlucky: the period is odd, or the half power lands on one less than the clock size. Then try another number. For clocks like these, at least half the choices work.</p>
+    </section>
+
+    <figure class="widget" id="factor-widget">
+      <div class="widget-panel">
+        <div class="prime-picker" role="group" aria-label="Hours on the clock">
+          <span class="group-label">Hours on the clock</span>
+          <div class="prime-buttons">
+            <button type="button" data-clock="15" aria-pressed="true">15</button>
+            <button type="button" data-clock="21" aria-pressed="false">21</button>
+            <button type="button" data-clock="33" aria-pressed="false">33</button>
+            <button type="button" data-clock="35" aria-pressed="false">35</button>
+          </div>
+        </div>
+        <div class="widget-controls"></div>
+        <div class="preset-row">
+          <button type="button" data-preset="21,4">Unlucky: 4 on 21</button>
+          <button type="button" data-preset="33,2">Unlucky: 2 on 33</button>
+        </div>
+        <p class="readout" aria-live="polite"></p>
+      </div>
+      <ol class="factor-steps" aria-label="The arithmetic, step by step"></ol>
+    </figure>
+
+    <section class="prose" aria-labelledby="shor-heading">
+      <h2 id="shor-heading">Finding the period fast</h2>
+      <p>Splitting the clock size breaks the <a href="two-keys.html">two-key system</a>. A cousin of the same trick finds the secret powers of the <a href="shared-secret.html">shared secret</a> and the hop counts of <a href="curves.html">curves</a>.</p>
+      <p>An ordinary computer steps through powers one at a time. With hundreds of digits, the period is far out of reach, and even the cleverest known ordinary methods are too slow. In 1994 Peter Shor found a method for a <button type="button" class="term" aria-controls="note-quantum" aria-expanded="false">quantum computer</button> that finds the period fast. It sets up waves for every possible rhythm at once, so the wrong ones cancel and the true one adds up.</p>
+      <aside class="term-note" id="note-quantum" hidden>
+        <p>A quantum computer stores information in qubits, which can hold a blend of 0 and 1 at once. Its steps act on all the possibilities together, and the possibilities interfere like waves. It is not just a faster ordinary computer; it only helps on problems with special structure.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Shor%27s_algorithm" target="_blank" rel="noopener">Shor's algorithm on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+    </section>
+
+    <figure class="widget" id="waves-widget">
+      <svg class="pulse-strip" role="img" aria-label="A pattern of pulses"></svg>
+      <svg class="arrow-plot" role="img" aria-label="Arrows chained tip to tail"></svg>
+      <div class="widget-panel">
+        <p class="widget-caption">Each pulse becomes an arrow pointing where its time lands on a clock with the test number of hours. Chain them tip to tail.</p>
+        <div class="widget-controls"></div>
+        <p class="readout" aria-live="polite"></p>
+        <div class="action-row">
+          <button type="button" data-action="new">New pattern</button>
+        </div>
+        <p class="widget-caption">A cartoon of the idea, not the real algorithm.</p>
+      </div>
+    </figure>
+
+    <section class="prose" aria-labelledby="notyet-heading">
+      <h2 id="notyet-heading">Not yet</h2>
+      <p>No quantum computer is anywhere near big enough. On real hardware, Shor's algorithm has only factored tiny numbers such as 15 and 21, and those runs leaned on already knowing the answer. People worry now anyway, because messages recorded today could be read once a big machine exists.</p>
+    </section>
+
+    <aside class="fact-card" aria-labelledby="grover-heading">
+      <h2 id="grover-heading">Scrambling has no rhythm</h2>
+      <p>The ciphers and fingerprints of <a href="scrambling.html">scrambling</a> have no period to find. The best known quantum attack on them, Grover's algorithm (1996), only takes a <button type="button" class="term" aria-controls="note-sqrt" aria-expanded="false">square root</button> off a brute-force search. The remedy there is simply longer keys.</p>
+      <aside class="term-note" id="note-sqrt" hidden>
+        <p>A search through 2<sup>128</sup> possible keys would take a quantum computer about 2<sup>64</sup> steps, the square root. Doubling the key length to 256 bits puts the work back at 2<sup>128</sup>.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Grover%27s_algorithm" target="_blank" rel="noopener">Grover's algorithm on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+    </aside>
+
+    <section class="prose closing">
+      <p class="bridge">Can we build a one-way street with <a href="lattices.html">no rhythm</a> for a quantum computer to hear?</p>
+    </section>
+  </main>
+
+  <script src="../scripts/core.js"></script>
+  <script src="../scripts/glossary.js"></script>
+  <script src="../scripts/quantum-helpers.js"></script>
+  <script src="../scripts/widget-quantum-period.js"></script>
+  <script src="../scripts/widget-quantum-factor.js"></script>
+  <script src="../scripts/widget-quantum-waves.js"></script>
+</body>
+</html>

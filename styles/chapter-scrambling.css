@@ -1,0 +1,235 @@
+/*
+ * Chapter "The blender": bit blocks for XOR, the toy mixing grids, and the SHA-256 fingerprint.
+ * Colors come only from the tokens in shared.css. Bit colors: message ink, key gray,
+ * scrambled blue (the thing that just changed), recovered green.
+ */
+
+/* ---------- shared bits for this chapter ---------- */
+
+.widget-stack { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 760px) {
+  .widget.widget-stack { grid-template-columns: minmax(0, 1fr); align-items: start; }
+}
+
+.text-field { display: flex; flex-direction: column; gap: var(--space-1); }
+.text-field label { font-family: var(--font-ui); font-size: var(--t-sm); color: var(--ink-soft); }
+
+.text-input {
+  min-height: var(--touch);
+  width: 100%;
+  min-width: 0;
+  padding: 0 var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--t-base);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.readout-code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--t-lg);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--accent);
+  overflow-wrap: anywhere;
+}
+
+.readout-code-ok { color: var(--ok); }
+.readout-of { font-size: var(--t-md); color: var(--ink-soft); font-weight: 400; }
+
+.legend-item { display: inline-flex; align-items: center; gap: var(--space-2); }
+
+/* ---------- XOR bit blocks ---------- */
+
+#xor-widget { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 760px) {
+  .widget#xor-widget {
+    grid-template-columns: minmax(0, 30rem) minmax(0, 1fr);
+    grid-template-areas: "bits field" "bits panel";
+    align-items: start;
+  }
+  .xor-bits { grid-area: bits; }
+  .xor-field { grid-area: field; }
+  .xor-panel { grid-area: panel; }
+}
+
+.xor-bits { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
+
+.bit-legend {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+
+.legend-swatch { width: 14px; height: 14px; border-radius: 3px; }
+.legend-message { background: var(--ink); }
+.legend-key { background: var(--ink-soft); opacity: 0.6; }
+.legend-out { background: var(--accent); }
+.legend-back { background: var(--ok); }
+.legend-item-back { display: none; }
+.xor-bits:has(.bit-blocks-unscrambled) .legend-item-back { display: inline-flex; }
+
+.bit-blocks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+  gap: var(--space-3) var(--space-2);
+}
+
+.bit-block { display: flex; flex-direction: column; gap: 3px; }
+
+.bit-block-char {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-weight: 600;
+  font-size: var(--t-md);
+  line-height: 1.1;
+}
+
+.bit-row { display: grid; grid-template-columns: repeat(8, 1fr); gap: 2px; max-width: 9.5rem; }
+@media (min-width: 760px) {
+  .bit-blocks { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4) var(--space-3); }
+  .bit-row { max-width: none; }
+  .bit-cell { font-size: 0.75rem; }
+}
+
+.bit-cell {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.66rem;
+  line-height: 1;
+  color: var(--ink-soft);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+
+.bit-row-message .bit-one { background: var(--ink); border-color: var(--ink); color: var(--on-accent); }
+.bit-row-key .bit-cell { opacity: 0.75; }
+.bit-row-key .bit-one { background: var(--ink-soft); border-color: var(--ink-soft); color: var(--on-accent); }
+.bit-row-out .bit-one { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.bit-row-out .bit-cell:not(.bit-one) { border-color: var(--accent-soft); }
+.bit-row-back .bit-one { background: var(--ok); border-color: var(--ok); color: var(--on-accent); }
+.bit-row-out { margin-top: 3px; }
+
+/* ---------- toy mixing cipher ---------- */
+
+.toy-label {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+  max-width: 40rem;
+}
+
+.mix-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  align-items: flex-start;
+}
+
+.mix-grid-block { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.mix-input-grid, .mix-output-grid { display: grid; grid-template-columns: repeat(6, auto); gap: 4px; justify-content: start; }
+
+.mix-input-cell {
+  width: var(--touch);
+  height: var(--touch);
+  padding: 0;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+
+.mix-input-cell.bit-one { background: var(--ink); border-color: var(--ink); color: var(--on-accent); }
+.mix-input-cell.mix-flipped { outline: 3px solid var(--accent); outline-offset: 1px; }
+
+.mix-output-grid { gap: 3px; }
+
+.mix-output-cell {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+
+.mix-output-cell.bit-one { background: var(--ink-soft); border-color: var(--ink-soft); color: var(--on-accent); }
+.mix-output-cell.mix-changed { box-shadow: 0 0 0 3px var(--accent); position: relative; }
+
+.mix-side { display: flex; flex-direction: column; gap: var(--space-4); min-width: 12rem; flex: 1 1 12rem; }
+
+.mix-round-bars {
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 2.6rem));
+  gap: var(--space-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.mix-round { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.mix-round-count { font-size: var(--t-sm); color: var(--ink-soft); }
+.mix-round-track {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 4rem;
+  border-bottom: 1.5px solid var(--rule);
+}
+.mix-round-bar { width: 100%; background: var(--accent-soft); border-radius: 2px 2px 0 0; }
+.mix-round-label { font-family: var(--font-ui); font-size: var(--t-sm); color: var(--ink-soft); }
+.mix-round-shown .mix-round-bar { background: var(--accent); }
+.mix-round-shown .mix-round-count, .mix-round-shown .mix-round-label { color: var(--accent); font-weight: 700; }
+
+/* ---------- SHA-256 fingerprint ---------- */
+
+.hash-input-row { display: flex; gap: var(--space-2); }
+.hash-input-row button {
+  flex: none;
+  min-height: var(--touch);
+  padding: 0 var(--space-4);
+  font-family: var(--font-ui);
+  font-size: var(--t-base);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.hash-result { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-8); align-items: center; }
+
+.hash-output {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--t-md);
+  line-height: 1.45;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+.hash-line { white-space: nowrap; }
+.hash-digit-changed { color: var(--accent); font-weight: 700; }
+
+@media (max-width: 420px) {
+  .hash-output { font-size: 1.05rem; }
+  .hash-input-row { flex-wrap: wrap; }
+}

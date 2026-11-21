@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signatures from the blender | Trapdoor</title>
+  <meta name="description" content="A hands-on lesson on hash-based signatures: sign with a Lamport one-time key, watch a second signature leak it, and see how Merkle trees and SLH-DSA build on the idea.">
+  <meta name="theme-color" content="#f4f3ee">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
+  <link rel="stylesheet" href="../styles/shared.css">
+  <link rel="stylesheet" href="../styles/chapter-hash-signatures.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-name" href="../index.html">Trapdoor</a>
+    <span class="chapter-number">Chapter 10</span>
+  </header>
+
+  <main class="chapter">
+    <h1>Signatures from the blender</h1>
+
+    <figure class="widget widget-hero" id="lamport-widget">
+      <div class="key-grid" role="group" aria-label="Message bits and the one-time key"></div>
+      <div class="widget-panel">
+        <p class="readout" aria-live="polite"></p>
+        <div class="action-row">
+          <button type="button" class="button-primary" data-action="sign">Sign</button>
+          <button type="button" data-action="check">Check signature</button>
+          <button type="button" data-action="forge">Forge one</button>
+          <button type="button" data-action="new">New key</button>
+        </div>
+      </div>
+      <figcaption class="key-caption">Gray: the public fingerprints (first 4 of 64 hex digits). Blue: secrets revealed by signing. Red columns: both secrets public.</figcaption>
+    </figure>
+
+    <section class="prose" aria-labelledby="lamport-heading">
+      <h2 id="lamport-heading">One secret per bit</h2>
+      <p>This is Leslie Lamport's signature from 1979. For every bit, the signer picks two random secrets and publishes only their <a href="scrambling.html">fingerprints</a>. To sign, reveal the secret that matches each bit. A checker fingerprints what you revealed and compares.</p>
+      <p>Making a fingerprint is quick. Finding a secret that matches one is not, so only the signer could have revealed them.</p>
+    </section>
+
+    <section class="prose" aria-labelledby="once-heading">
+      <h2 id="once-heading">Only once</h2>
+      <p>Sign two different messages and some columns have both secrets public. Mix and match them, and you can sign messages the owner never saw. Each key is good for one signature.</p>
+    </section>
+
+    <section class="card" aria-labelledby="merkle-heading">
+      <h2 id="merkle-heading">Many keys, one fingerprint</h2>
+      <p>Ralph Merkle's fix, also from 1979: make many one-time keys, fingerprint them in pairs, then fingerprint those in pairs, up to a single root. Publish only the root. This is a <button type="button" class="term" aria-controls="note-merkle" aria-expanded="false">Merkle tree</button>.</p>
+      <aside class="term-note" id="note-merkle" hidden>
+        <p>A Merkle tree fingerprints data in pairs, level by level, until one fingerprint remains. Changing anything at the bottom changes the root, so the root vouches for everything beneath it. Git and Bitcoin use the same trick.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Merkle_tree" target="_blank" rel="noopener">Merkle tree on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <figure class="widget widget-merkle" id="merkle-widget">
+        <svg class="merkle-svg" role="img" aria-label="A tree of fingerprints"></svg>
+        <div class="widget-panel">
+          <p class="readout" aria-live="polite"></p>
+          <div class="widget-controls"></div>
+        </div>
+      </figure>
+    </section>
+
+    <section class="card" aria-labelledby="slh-heading">
+      <h2 id="slh-heading">The modern version</h2>
+      <p>In August 2024 NIST standardized SLH-DSA, a <button type="button" class="term" aria-controls="note-stateless" aria-expanded="false">stateless</button> descendant of these trees. It trusts nothing but the hash: if fingerprints stay hard to reverse, its signatures stay safe.</p>
+      <aside class="term-note" id="note-stateless" hidden>
+        <p>A plain Merkle tree forces the signer to remember which one-time keys are used up; reusing one leaks it. A stateless scheme needs no such memory. SLH-DSA picks keys from a giant tree pseudo-randomly, using keys that tolerate a few reuses.</p>
+        <p><a href="https://en.wikipedia.org/wiki/SPHINCS%2B" target="_blank" rel="noopener">SPHINCS+, the basis of SLH-DSA, on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>The price is size. Its public key is 32 bytes, but its smallest signature is 7,856 bytes, over a hundred times an Ed25519 signature.</p>
+    </section>
+
+    <section class="card" aria-labelledby="mceliece-heading">
+      <h2 id="mceliece-heading">Hiding a message in mistakes</h2>
+      <p>An older idea, from Robert McEliece in 1978. Take an <button type="button" class="term" aria-controls="note-code" aria-expanded="false">error-correcting code</button> and disguise it so it looks random. To send a message, encode it and flip some bits on purpose. Only the key holder knows the undisguised code, so only they can repair the errors.</p>
+      <aside class="term-note" id="note-code" hidden>
+        <p>An error-correcting code adds careful redundancy to data so that a few flipped bits can be found and fixed. It is why a scratched disc still plays and why QR codes survive smudges.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Error_correction_code" target="_blank" rel="noopener">Error correction code on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>The basic design has survived nearly fifty years of attacks. The catch: its modern form, Classic McEliece, has public keys of 261,120 bytes at the smallest setting.</p>
+    </section>
+
+    <section class="prose closing">
+      <p class="bridge">Several foundations now stand, each with its own price. How do they compare <a href="big-picture.html">side by side</a>?</p>
+    </section>
+  </main>
+
+  <script src="../scripts/core.js"></script>
+  <script src="../scripts/glossary.js"></script>
+  <script src="../scripts/widget-hash-signatures-lamport.js"></script>
+  <script src="../scripts/widget-hash-signatures-merkle.js"></script>
+</body>
+</html>
