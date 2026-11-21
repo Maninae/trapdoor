@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clock math | Trapdoor</title>
+  <meta name="description" content="A hands-on first lesson in modular arithmetic: numbers that wrap around a clock, and why some clock calculations are easy one way and hard the other.">
+  <meta name="theme-color" content="#f4f3ee">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
+  <link rel="stylesheet" href="../styles/shared.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-name" href="../index.html">Trapdoor</a>
+    <span class="chapter-number">Chapter 1</span>
+  </header>
+
+  <main class="chapter">
+    <h1>Clock math</h1>
+
+    <figure class="widget widget-hero" id="wrap-widget">
+      <svg class="dial" role="img" aria-label="A clock face"></svg>
+      <div class="widget-panel">
+        <p class="readout" aria-live="polite"></p>
+        <div class="widget-controls"></div>
+      </div>
+    </figure>
+
+    <section class="prose" aria-labelledby="wrap-heading">
+      <h2 id="wrap-heading">Counting that wraps around</h2>
+      <p>On a 12-hour clock, 15 o'clock is 3 o'clock. You go around once and have 3 hours left over. That leftover is the <button type="button" class="term" aria-controls="note-remainder" aria-expanded="false">remainder</button> after dividing by 12.</p>
+      <aside class="term-note" id="note-remainder" hidden>
+        <p>When a division does not come out even, the remainder is what is left over. 15 divided by 12 is 1, with 3 left over. The remainder is always smaller than the number you divided by.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Remainder" target="_blank" rel="noopener">Remainder on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>We write this as 15 <button type="button" class="term" aria-controls="note-mod" aria-expanded="false">mod</button> 12 = 3. Our clocks put 0 at the top where 12 would be, so a clock with <i>n</i> hours shows 0 through <i>n</i>&nbsp;&minus;&nbsp;1.</p>
+      <aside class="term-note" id="note-mod" hidden>
+        <p>Short for "modulo". <i>a</i> mod <i>n</i> means the remainder when <i>a</i> is divided by <i>n</i>, which is the hour where <i>a</i> lands on an <i>n</i>-hour clock. Many programming languages write it as <code>a % n</code>.</p>
+        <p><a href="https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/what-is-modular-arithmetic" target="_blank" rel="noopener">What is modular arithmetic? (Khan Academy)</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+    </section>
+
+    <section class="prose" aria-labelledby="arithmetic-heading">
+      <h2 id="arithmetic-heading">Adding and multiplying</h2>
+      <p>Clock arithmetic uses the rules you already know. Add or multiply as usual, then wrap. On a 12-hour clock, 9 + 5 = 14, which lands on 2.</p>
+      <p>You can also wrap each number first and land in the same place. That keeps the numbers small, which matters in a moment.</p>
+    </section>
+
+    <figure class="widget" id="arithmetic-widget">
+      <svg class="dial" role="img" aria-label="A clock face"></svg>
+      <div class="widget-panel">
+        <div class="operation-toggle" role="group" aria-label="Operation">
+          <button type="button" data-operation="add" aria-pressed="true">Add</button>
+          <button type="button" data-operation="multiply" aria-pressed="false">Multiply</button>
+        </div>
+        <p class="readout" aria-live="polite"></p>
+        <div class="widget-controls"></div>
+      </div>
+    </figure>
+
+    <section class="prose" aria-labelledby="powers-heading">
+      <h2 id="powers-heading">Powers on a prime clock</h2>
+      <p>Now multiply by the same number again and again. Take a clock whose number of hours is <button type="button" class="term" aria-controls="note-prime" aria-expanded="false">prime</button>, say 7. The powers of 3 are 3, 9, 27, 81, and so on. They land on 3, 2, 6, 4, 5, 1, and then the pattern repeats.</p>
+      <aside class="term-note" id="note-prime" hidden>
+        <p>A prime is a whole number above 1 that only 1 and itself divide evenly. 7, 17, and 29 are prime. 12 is not, because 12 = 3 &times; 4.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Prime_number" target="_blank" rel="noopener">Prime number on Wikipedia</a></p>
+        <button type="button" class="term-note-close">Close</button>
+      </aside>
+      <p>Each hop multiplies the last landing and wraps. On a bigger clock, watch how the path jumps around.</p>
+    </section>
+
+    <figure class="widget" id="powers-widget">
+      <svg class="dial" role="img" aria-label="A clock face"></svg>
+      <div class="widget-panel">
+        <div class="prime-picker" role="group" aria-label="Hours on the clock">
+          <span class="group-label">Hours on the clock</span>
+          <div class="prime-buttons">
+            <button type="button" data-prime="7" aria-pressed="false">7</button>
+            <button type="button" data-prime="11" aria-pressed="false">11</button>
+            <button type="button" data-prime="13" aria-pressed="false">13</button>
+            <button type="button" data-prime="17" aria-pressed="true">17</button>
+            <button type="button" data-prime="23" aria-pressed="false">23</button>
+            <button type="button" data-prime="29" aria-pressed="false">29</button>
+          </div>
+        </div>
+        <div class="widget-controls"></div>
+        <p class="readout" aria-live="polite"></p>
+        <div class="action-row">
+          <button type="button" class="button-primary" data-action="next">Next hop</button>
+          <button type="button" data-action="play">Play all hops</button>
+          <button type="button" data-action="reset">Start over</button>
+        </div>
+      </div>
+      <figcaption>
+        <ol class="hop-list" aria-label="Powers so far"></ol>
+      </figcaption>
+    </figure>
+
+    <section class="prose" aria-labelledby="trapdoor-heading">
+      <h2 id="trapdoor-heading">Easy forward, hard backward</h2>
+      <p>Going forward is quick. Given the power, a short chain of multiplications tells you where it lands, even on an enormous clock.</p>
+      <p>Going backward is slow. Told only where it landed, can you find which power got there? The hops look scrambled, so the obvious method is to try powers one at a time.</p>
+    </section>
+
+    <figure class="widget" id="challenge-widget">
+      <svg class="dial" role="img" aria-label="A clock face"></svg>
+      <div class="widget-panel">
+        <p class="readout" aria-live="polite"></p>
+        <form class="guess-form">
+          <label for="guess-exponent">Your guess for the power</label>
+          <div class="guess-row">
+            <input id="guess-exponent" type="number" inputmode="numeric" min="1" max="999" step="1" placeholder="e.g. 5">
+            <button type="submit" class="button-primary">Try it</button>
+          </div>
+        </form>
+        <p class="tries">Tries: <span class="tries-count">0</span></p>
+        <div class="action-row">
+          <button type="button" data-action="computer">Let the computer try 1, 2, 3, &hellip;</button>
+          <button type="button" data-action="new">New puzzle</button>
+        </div>
+      </div>
+      <figcaption>
+        <ol class="try-list" aria-label="Your tries"></ol>
+      </figcaption>
+    </figure>
+
+    <figure class="forward-demo" id="forward-demo">
+      <label for="forward-exponent">Forward on a 39-digit clock (2<sup>127</sup>&nbsp;&minus;&nbsp;1 hours): 3 to the power</label>
+      <input id="forward-exponent" class="forward-input" type="text" inputmode="numeric" autocomplete="off" value="123456789012345678901234567890">
+      <p class="forward-output" aria-live="polite"></p>
+      <figcaption>Going backward here means trying up to about 10<sup>38</sup> powers.</figcaption>
+    </figure>
+
+    <section class="prose closing">
+      <p>This forward-easy, backward-hard property is the trapdoor that later lessons build on.</p>
+      <p class="bridge">If two people each keep a secret power, could they agree on a shared hour while everyone else listens in?</p>
+    </section>
+  </main>
+
+  <script src="../scripts/core.js"></script>
+  <script src="../scripts/clock-dial.js"></script>
+  <script src="../scripts/glossary.js"></script>
+  <script src="../scripts/widget-wrap.js"></script>
+  <script src="../scripts/widget-arithmetic.js"></script>
+  <script src="../scripts/widget-powers.js"></script>
+  <script src="../scripts/widget-challenge.js"></script>
+</body>
+</html>
